@@ -1,4 +1,4 @@
-package ru.isu.auc.messaging.model.notifications.payload;
+package ru.isu.auc.auction.model.notification.payload;
 
 import lombok.Data;
 

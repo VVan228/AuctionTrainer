@@ -6,11 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.isu.auc.auction.repo.NotificationRepo;
 import ru.isu.auc.messaging.service.MessagingService;
 import ru.isu.auc.scheduling.job.JobHelper;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class TestController {
@@ -20,6 +18,9 @@ public class TestController {
 
     @Autowired
     JobHelper jobHelper;
+
+    @Autowired
+    NotificationRepo notificationRepo;
 
     @ResponseBody
     @RequestMapping(
@@ -31,6 +32,15 @@ public class TestController {
         //data.put("data", "data");
         //messagingService.sendNotification(data, "test");
 
-        jobHelper.startJob("2");
+        //jobHelper.startJob("2");
+
+        //Notification<TeamCaptainChangedPayload> not = new Notification<>();
+        //not.setPayload(new TeamCaptainChangedPayload());
+        //not.getPayload().setTeamId(0L);
+        //not.getPayload().setNewCaptainId(1L);
+        //not.getPayload().setOldCaptainId(2L);
+        //not.setType(NotificationType.TeamCaptainChanged);
+
+        System.out.println(notificationRepo.findAll());
     }
 }

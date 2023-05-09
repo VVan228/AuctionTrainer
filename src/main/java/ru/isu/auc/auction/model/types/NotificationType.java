@@ -1,4 +1,6 @@
-package ru.isu.auc.messaging.model.notifications;
+package ru.isu.auc.auction.model.types;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum NotificationType {
     TeamConnected("teams:connected"),
@@ -14,6 +16,7 @@ public enum NotificationType {
         this.alias = alias;
     }
 
+    @JsonValue
     public String getAlias() {
         return alias;
     }
