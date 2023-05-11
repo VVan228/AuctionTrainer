@@ -6,9 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.isu.auc.auction.repo.IntervalRepo;
 import ru.isu.auc.auction.repo.NotificationRepo;
+import ru.isu.auc.auction.service.factories.RoomFactory;
 import ru.isu.auc.messaging.service.MessagingService;
 import ru.isu.auc.scheduling.job.JobHelper;
+import ru.isu.auc.security.model.User;
+import ru.isu.auc.security.service.UserRepo;
+
+import java.util.Optional;
 
 @Controller
 public class TestController {
@@ -22,25 +28,24 @@ public class TestController {
     @Autowired
     NotificationRepo notificationRepo;
 
+    @Autowired
+    RoomFactory roomFactory;
+
+    @Autowired
+    IntervalRepo intervalRepo;
+
+
+    @Autowired
+    UserRepo userRepo;
+
     @ResponseBody
     @RequestMapping(
             value="/auth/test",
             method = RequestMethod.POST
     )
     public void authenticate() throws SchedulerException {
-        //Map<String, Object> data = new HashMap<>();
-        //data.put("data", "data");
-        //messagingService.sendNotification(data, "test");
+        Optional<User> user = userRepo.findById(1L);
+        if(user.isEmpty()) return;
 
-        //jobHelper.startJob("2");
-
-        //Notification<TeamCaptainChangedPayload> not = new Notification<>();
-        //not.setPayload(new TeamCaptainChangedPayload());
-        //not.getPayload().setTeamId(0L);
-        //not.getPayload().setNewCaptainId(1L);
-        //not.getPayload().setOldCaptainId(2L);
-        //not.setType(NotificationType.TeamCaptainChanged);
-
-        System.out.println(notificationRepo.findAll());
     }
 }
