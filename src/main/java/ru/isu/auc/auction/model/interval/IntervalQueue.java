@@ -17,4 +17,31 @@ public class IntervalQueue {
     @OneToMany
     List<IntervalPoint> intervalPoints = new ArrayList<>();
     Long currentIndex;
+
+
+    public IntervalQueue setId(Long id) {
+        this.id = id;
+        return this;
+
+    }
+
+    public IntervalQueue setRoomId(Long roomId) {
+        this.roomId = roomId;
+        return this;
+    }
+
+    public IntervalQueue setIntervalPoints(List<IntervalPoint> intervalPoints) {
+        this.intervalPoints = intervalPoints;
+        return this;
+    }
+
+    public IntervalQueue setCurrentIndex(Long currentIndex) {
+        this.currentIndex = currentIndex;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return intervalPoints.toString();
+    }
 }
