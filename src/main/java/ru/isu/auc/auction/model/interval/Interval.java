@@ -25,7 +25,9 @@ public class Interval {
     Long entityId;
     Boolean autostart;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(
+        cascade=CascadeType.ALL,
+        fetch = FetchType.LAZY)
     List<Interval> intervals = new ArrayList<>();
 
     public Interval setId(Long id) {

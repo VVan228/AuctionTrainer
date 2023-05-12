@@ -1,0 +1,57 @@
+{
+  "name": "greatestRoom",
+  "startTime": "2023-05-11 10:00:00",
+  "defaultRoundPause": 550,
+  "defaultLotPause": 1000,
+  "defaultLotDuration": 15000,
+  "rounds": [
+    {
+      "ascending": true,
+      "roundPause": 500,
+      "defaultLotPause": 500,
+      "defaultLotDuration": 1400,
+      "defaultBetParams": {
+        "startSum": 400,
+        "limitSum": 800,
+        "minBetStep": 50
+      },
+      "lots":[
+        {
+          "name": "lot1",
+          "description": "desc",
+          "duration": 300,
+          "pauseAfter": 10,
+          "betParams":{
+            "startSum": 450,
+            "limitSum": 850,
+            "minBetStep": 30
+          }
+        },
+        {
+          "name": "lot2",
+          "description": "desc"
+        }
+      ]
+    },
+    {
+      "ascending": false,
+      "lots":[
+        {
+          "name": "lot3",
+          "description": "desc",
+          "duration": 302,
+          "pauseAfter": 12,
+          "betParams":{
+            "startSum": 453,
+            "limitSum": 853,
+            "minBetStep": 33
+          }
+        },
+        {
+          "name": "lot4",
+          "description": "desc"
+        }
+      ]
+    }
+  ]
+}

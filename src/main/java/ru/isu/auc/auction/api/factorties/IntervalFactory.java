@@ -1,4 +1,4 @@
-package ru.isu.auc.auction.service.factories;
+package ru.isu.auc.auction.api.factorties;
 
 import ru.isu.auc.auction.model.interval.Interval;
 import ru.isu.auc.auction.model.types.IntervalType;

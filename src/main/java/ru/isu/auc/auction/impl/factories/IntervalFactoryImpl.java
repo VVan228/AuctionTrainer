@@ -1,7 +1,8 @@
-package ru.isu.auc.auction.service.factories;
+package ru.isu.auc.auction.impl.factories;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.isu.auc.auction.api.factorties.IntervalFactory;
 import ru.isu.auc.auction.model.interval.Interval;
 import ru.isu.auc.auction.model.types.IntervalType;
 import ru.isu.auc.auction.model.types.Status;
@@ -9,18 +10,10 @@ import ru.isu.auc.auction.model.types.Status;
 import java.util.List;
 
 @Component
-public class IntervalFactoryImpl implements IntervalFactory{
+public class IntervalFactoryImpl implements IntervalFactory {
 
     @Value("${auction.defaults.autostart}")
     private boolean DEFAULT_AUTOSTART;
-    @Value("${auction.defaults.end_on_all_answered}")
-    private boolean DEFAULT_END_ON_ALL_ANSWERED;
-    @Value("${auction.defaults.min_bet_step}")
-    private Integer DEFAULT_MIN_BET_STEP;
-    @Value("${auction.defaults.start_sum}")
-    private Integer DEFAULT_START_SUM;
-    @Value("${auction.defaults.limit_sum}")
-    private Integer DEFAULT_LIMIT_SUM;
     @Value("${auction.defaults.round_pause}")
     private Long DEFAULT_ROUND_PAUSE;
     @Value("${auction.defaults.lot_pause}")
@@ -63,7 +56,7 @@ public class IntervalFactoryImpl implements IntervalFactory{
     @Override
     public Interval createLotPause(Long duration, Boolean autostart) {
         return new Interval()
-            .setDuration(duration==null?DEFAULT_LOT_DURATION:duration)
+            .setDuration(duration==null?DEFAULT_LOT_PAUSE:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
             .setStatus(Status.SAVED)
             .setType(IntervalType.LOT_PAUSE);
@@ -88,7 +81,7 @@ public class IntervalFactoryImpl implements IntervalFactory{
     @Override
     public Interval createRoundPause(Long duration, Boolean autostart) {
         return new Interval()
-            .setDuration(duration==null?DEFAULT_LOT_DURATION:duration)
+            .setDuration(duration==null?DEFAULT_ROUND_PAUSE:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
             .setStatus(Status.SAVED)
             .setType(IntervalType.ROUND_PAUSE);
