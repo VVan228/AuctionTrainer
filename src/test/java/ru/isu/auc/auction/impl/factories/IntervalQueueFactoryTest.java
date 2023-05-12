@@ -6,6 +6,7 @@ import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
 import ru.isu.auc.auction.model.interval.Interval;
 import ru.isu.auc.auction.model.interval.IntervalPoint;
 import ru.isu.auc.auction.model.interval.IntervalQueue;
+import ru.isu.auc.auction.model.room.Room;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -56,7 +57,9 @@ public class IntervalQueueFactoryTest {
         i13.setIntervals(Arrays.asList(i231, i232, i233));
 
         IntervalQueue res = factory.createFromIntervals(
-            Arrays.asList(i11, i214, i12, i224, i13));
+            new Room()
+                .setIntervals(
+                    Arrays.asList(i11, i214, i12, i224, i13)));
         System.out.println(res.getIntervalPoints());
         System.out.println(res.getIntervalPoints()
             .stream().map(IntervalPoint::getTimestamp)

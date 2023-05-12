@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -13,7 +14,7 @@ public class IntervalQueue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    Long roomId;
+    UUID roomUid;
     @OneToMany
     List<IntervalPoint> intervalPoints = new ArrayList<>();
     Long currentIndex;
@@ -25,8 +26,8 @@ public class IntervalQueue {
 
     }
 
-    public IntervalQueue setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public IntervalQueue setRoomUid(UUID roomUid) {
+        this.roomUid = roomUid;
         return this;
     }
 

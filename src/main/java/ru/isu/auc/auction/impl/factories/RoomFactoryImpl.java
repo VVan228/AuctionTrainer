@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.impl.factories;
 
+import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -37,15 +38,6 @@ public class RoomFactoryImpl implements RoomFactory {
     private Integer DEFAULT_LIMIT_SUM;
 
     @Autowired
-    LotService lotService;
-    @Autowired
-    RoomService roomService;
-    @Autowired
-    RoundService roundService;
-    @Autowired
-    IntervalService intervalService;
-
-    @Autowired
     IntervalFactory intervalFactory;
 
     @Autowired
@@ -58,12 +50,13 @@ public class RoomFactoryImpl implements RoomFactory {
     }
 
     @Override
-    public Room createAndSaveDefaultRoom(CreateDefaultRoomRequest request, User creator) {
-        Room room = new Room();
-        room.setCreator(creator);
-        room.setName(request.getName());
-        room.setStartTime(request.getStartTime());
-        roomService.save(room);
+    public Triplet<Room, List<Lot>, List<Round>> createAndSaveDefaultRoom(CreateDefaultRoomRequest request, User creator) {
+        Room room = new Room()
+            .setCreator(creator)
+            .setName(request.getName())
+            .setStartTime(request.getStartTime());
+        List<Lot> resLots = new ArrayList<>();
+        List<Round> resRounds = new ArrayList<>();
 
         List<Interval> rounds = new ArrayList<>();
         int roundLen = request.getRounds().size();
@@ -117,11 +110,11 @@ public class RoomFactoryImpl implements RoomFactory {
                     )
                 );
 
-                Lot lotEntity = new Lot();
-                lotEntity.setDescription(lot.getDescription());
-                lotEntity.setName(lot.getName());
-                lotEntity.setBetParams(betParams);
-                lotService.save(lotEntity);
+                Lot lotEntity = new Lot()
+                    .setDescription(lot.getDescription())
+                    .setName(lot.getName())
+                    .setBetParams(betParams);
+                resLots.add(lotEntity);
 
                 Interval lotInterval = intervalFactory.createLot(
                     //getLotDuration(request, round, lot),
@@ -129,7 +122,7 @@ public class RoomFactoryImpl implements RoomFactory {
                         List.of("defaultLotDuration", "duration"),
                         Arrays.asList(lot, round, request)
                     ),
-                    lotEntity.getId()
+                    lotEntity.getUid()
                 );
 
                 lots.add(lotInterval);
@@ -148,14 +141,14 @@ public class RoomFactoryImpl implements RoomFactory {
                 lots.add(lotPause);
             }
 
-            Round roundEntity = new Round();
-            roundEntity.setRoomId(room.getId());
-            roundEntity.setAscending(isRoundAsc(i));
-            roundService.save(roundEntity);
+            Round roundEntity = new Round()
+                .setRoomUid(room.getUid())
+                .setAscending(isRoundAsc(i));
+            resRounds.add(roundEntity);
 
             Interval roundInterval = intervalFactory.createRound(
                 lots,
-                roundEntity.getId()
+                roundEntity.getUid()
             );
 
             rounds.add(roundInterval);
@@ -174,9 +167,9 @@ public class RoomFactoryImpl implements RoomFactory {
             rounds.add(roundPause);
 
         }
-        intervalService.saveAll(rounds);
         room.setIntervals(rounds);
-        roomService.save(room);
-        return room;
+
+
+        return new Triplet<>(room, resLots, resRounds);
     }
 }

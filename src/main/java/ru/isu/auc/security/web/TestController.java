@@ -1,4 +1,4 @@
-package ru.isu.auc.security.controller;
+package ru.isu.auc.security.web;
 
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;

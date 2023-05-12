@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
     @Override
     public IntervalQueue createFromIntervals(
-        List<Interval> intervals
+        Room room
     ) {
 
         Set<Long> timestamps = new TreeSet<>();
@@ -22,7 +22,7 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
             IntervalPoint::new);
 
         Long totalDuration = 0L;
-        for(Interval i: intervals) {
+        for(Interval i: room.getIntervals()) {
             addTimestamps(
                 points,
                 timestamps,
@@ -33,6 +33,7 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
 
         return new IntervalQueue()
             .setCurrentIndex(0L)
+            .setRoomUid(room.getUid())
             .setIntervalPoints(
                 timestamps.stream()
                     .map(t->points.get(t).setTimestamp(t))

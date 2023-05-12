@@ -8,6 +8,7 @@ import ru.isu.auc.auction.model.types.IntervalType;
 import ru.isu.auc.auction.model.types.Status;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class IntervalFactoryImpl implements IntervalFactory {
@@ -23,8 +24,8 @@ public class IntervalFactoryImpl implements IntervalFactory {
 
 
     @Override
-    public Interval createLot(Long duration, Long entityId) {
-        return createLot(duration, entityId, DEFAULT_AUTOSTART);
+    public Interval createLot(Long duration, UUID entityUid) {
+        return createLot(duration, entityUid, DEFAULT_AUTOSTART);
     }
 
     @Override
@@ -33,8 +34,8 @@ public class IntervalFactoryImpl implements IntervalFactory {
     }
 
     @Override
-    public Interval createRound(List<Interval> lots, Long entityId) {
-        return createRound(lots, entityId, DEFAULT_AUTOSTART);
+    public Interval createRound(List<Interval> lots, UUID entityUid) {
+        return createRound(lots, entityUid, DEFAULT_AUTOSTART);
     }
 
     @Override
@@ -44,13 +45,13 @@ public class IntervalFactoryImpl implements IntervalFactory {
 
 
     @Override
-    public Interval createLot(Long duration, Long entityId, Boolean autostart) {
+    public Interval createLot(Long duration, UUID entityUid, Boolean autostart) {
         return new Interval()
             .setDuration(duration==null?DEFAULT_LOT_DURATION:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
             .setStatus(Status.SAVED)
             .setType(IntervalType.LOT)
-            .setEntityId(entityId);
+            .setEntityUid(entityUid);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class IntervalFactoryImpl implements IntervalFactory {
     }
 
     @Override
-    public Interval createRound(List<Interval> lots, Long entityId, Boolean autostart) {
+    public Interval createRound(List<Interval> lots, UUID entityUid, Boolean autostart) {
         return new Interval()
             .setDuration(
                 lots.stream()
@@ -73,7 +74,7 @@ public class IntervalFactoryImpl implements IntervalFactory {
             )
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
             .setStatus(Status.SAVED)
-            .setEntityId(entityId)
+            .setEntityUid(entityUid)
             .setIntervals(lots)
             .setType(IntervalType.ROUND);
     }

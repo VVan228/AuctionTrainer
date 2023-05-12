@@ -9,6 +9,7 @@ import ru.isu.auc.auction.model.types.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity(name = "interval")
 @Data
@@ -22,7 +23,7 @@ public class Interval {
     Long duration;
     Status status;
     IntervalType type;
-    Long entityId;
+    UUID entityUid;
     Boolean autostart;
 
     @OneToMany(
@@ -50,8 +51,8 @@ public class Interval {
         return this;
     }
 
-    public Interval setEntityId(Long entityId) {
-        this.entityId = entityId;
+    public Interval setEntityUid(UUID entityUid) {
+        this.entityUid = entityUid;
         return this;
     }
 
