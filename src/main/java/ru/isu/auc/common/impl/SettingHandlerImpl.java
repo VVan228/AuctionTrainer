@@ -1,7 +1,7 @@
-package ru.isu.auc.auction.impl;
+package ru.isu.auc.common.impl;
 
 import org.springframework.stereotype.Component;
-import ru.isu.auc.auction.api.SettingHandler;
+import ru.isu.auc.common.api.SettingHandler;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;

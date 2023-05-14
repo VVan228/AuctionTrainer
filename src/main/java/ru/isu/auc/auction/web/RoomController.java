@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.isu.auc.auction.model.requests.CreateDefaultRoomRequest;
-import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.repo.IntervalRepo;
 import ru.isu.auc.auction.repo.LotRepo;
 import ru.isu.auc.auction.repo.RoomRepo;
@@ -48,7 +47,7 @@ public class RoomController {
         @RequestBody CreateDefaultRoomRequest request)
     {
         User user = SecurityUser.getCurrent().getUser();
-        var r = roomFactory.createAndSaveDefaultRoom(request, user);
+        var r = roomFactory.createDefaultRoom(request, user);
         lotRepo.saveAll(r.getValue1());
         roundRepo.saveAll(r.getValue2());
         intervalRepo.saveAll(r.getValue0().getIntervals());

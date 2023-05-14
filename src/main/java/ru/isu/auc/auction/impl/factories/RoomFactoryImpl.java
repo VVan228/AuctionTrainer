@@ -14,11 +14,7 @@ import ru.isu.auc.auction.model.room.BetParams;
 import ru.isu.auc.auction.model.room.Lot;
 import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.room.Round;
-import ru.isu.auc.auction.api.SettingHandler;
-import ru.isu.auc.auction.api.entities.IntervalService;
-import ru.isu.auc.auction.api.entities.LotService;
-import ru.isu.auc.auction.api.entities.RoomService;
-import ru.isu.auc.auction.api.entities.RoundService;
+import ru.isu.auc.common.api.SettingHandler;
 import ru.isu.auc.security.model.User;
 
 import java.util.ArrayList;
@@ -38,11 +34,18 @@ public class RoomFactoryImpl implements RoomFactory {
     private Integer DEFAULT_LIMIT_SUM;
 
     @Autowired
-    IntervalFactory intervalFactory;
+    public IntervalFactory intervalFactory;
 
     @Autowired
-    SettingHandler settingHandler;
+    public SettingHandler settingHandler;
 
+
+    public RoomFactoryImpl(
+        IntervalFactory intervalFactory,
+        SettingHandler settingHandler) {
+        this.intervalFactory = intervalFactory;
+        this.settingHandler = settingHandler;
+    }
 
     //для стандартной комнаты only
     boolean isRoundAsc(int index){
@@ -50,7 +53,7 @@ public class RoomFactoryImpl implements RoomFactory {
     }
 
     @Override
-    public Triplet<Room, List<Lot>, List<Round>> createAndSaveDefaultRoom(CreateDefaultRoomRequest request, User creator) {
+    public Triplet<Room, List<Lot>, List<Round>> createDefaultRoom(CreateDefaultRoomRequest request, User creator) {
         Room room = new Room()
             .setCreator(creator)
             .setName(request.getName())

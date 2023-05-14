@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.model.notification;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,14 +12,12 @@ import ru.isu.auc.auction.model.types.NotificationType;
 @Data
 public class Notification <P extends IPayload> {
 
-    //@Convert(converter = PayloadConverter.class)
     @Type(JsonType.class)
     @Column(columnDefinition = "json")
     P payload;
 
-    NotificationType type;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 }

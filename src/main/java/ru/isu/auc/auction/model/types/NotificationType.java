@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.model.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum NotificationType {
@@ -10,14 +11,22 @@ public enum NotificationType {
     UserDisconnected("users:disconnected"),
     RoomEvent("room:event");
 
-    final String alias;
+    @JsonValue
+    private final String alias;
 
     NotificationType(String alias) {
         this.alias = alias;
     }
 
-    @JsonValue
     public String getAlias() {
         return alias;
+    }
+
+    @JsonCreator
+    public static NotificationType fromAlias(String alias) {
+        for(var type: NotificationType.values())
+            if(type.getAlias().equals(alias))
+                return type;
+        return null;
     }
 }

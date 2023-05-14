@@ -1,7 +1,10 @@
 package ru.isu.auc.messaging.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Value;
+import ru.isu.auc.auction.model.notification.Notification;
 import ru.isu.auc.messaging.model.Params;
 import ru.isu.auc.messaging.model.PublishNotification;
 
@@ -17,10 +20,10 @@ public class MessagingServiceImpl implements MessagingService{
     String apiKey;
     @Value("${centrifugo.api_url}")
     String apiUrl;
-    Gson gson = new Gson();
+    ObjectMapper om = new ObjectMapper();
 
     @Override
-    public void sendNotification(Object data, String channel){
+    public void sendNotification(Notification<?> data, String channel){
 
         PublishNotification notification = new PublishNotification();
         notification.setMethod("publish");
@@ -31,11 +34,17 @@ public class MessagingServiceImpl implements MessagingService{
 
 
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(apiUrl))
-            .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(notification)))
-            .header("Authorization", "apikey " + apiKey)
-            .build();
+        HttpRequest request = null;
+        try {
+            request = HttpRequest.newBuilder()
+                .uri(URI.create(apiUrl))
+                .POST(HttpRequest.BodyPublishers.ofString(
+                    om.writeValueAsString(notification)))
+                .header("Authorization", "apikey " + apiKey)
+                .build();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         try {
             HttpResponse<String> res = client.send(request,

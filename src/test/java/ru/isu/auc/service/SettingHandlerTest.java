@@ -7,8 +7,8 @@ import ru.isu.auc.auction.model.interval.Interval;
 import ru.isu.auc.auction.model.requests.CreateDefaultRoomRequest;
 import ru.isu.auc.auction.model.requests.RoundRequestPart;
 import ru.isu.auc.auction.model.room.BetParams;
-import ru.isu.auc.auction.api.SettingHandler;
-import ru.isu.auc.auction.impl.SettingHandlerImpl;
+import ru.isu.auc.common.api.SettingHandler;
+import ru.isu.auc.common.impl.SettingHandlerImpl;
 
 import java.util.Arrays;
 import java.util.List;

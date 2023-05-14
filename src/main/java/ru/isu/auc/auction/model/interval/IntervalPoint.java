@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.model.interval;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,6 +18,7 @@ public class IntervalPoint {
     List<Long> intervalStartIds = new ArrayList<>();
     @ElementCollection
     List<Long> intervalEndIds = new ArrayList<>();
+    @JsonIgnore
     Long queueId;
     Long timestamp;
 

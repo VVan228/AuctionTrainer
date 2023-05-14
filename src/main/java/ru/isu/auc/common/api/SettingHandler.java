@@ -1,4 +1,4 @@
-package ru.isu.auc.auction.api;
+package ru.isu.auc.common.api;
 
 import java.util.List;
 

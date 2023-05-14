@@ -10,5 +10,5 @@ import ru.isu.auc.security.model.User;
 import java.util.List;
 
 public interface RoomFactory {
-    Triplet<Room, List<Lot>, List<Round>> createAndSaveDefaultRoom(CreateDefaultRoomRequest request, User creator);
+    Triplet<Room, List<Lot>, List<Round>> createDefaultRoom(CreateDefaultRoomRequest request, User creator);
 }

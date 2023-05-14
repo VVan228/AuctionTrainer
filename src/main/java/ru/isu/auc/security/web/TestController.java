@@ -1,6 +1,5 @@
 package ru.isu.auc.security.web;
 
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +9,10 @@ import ru.isu.auc.auction.repo.IntervalRepo;
 import ru.isu.auc.auction.repo.NotificationRepo;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.messaging.service.MessagingService;
-import ru.isu.auc.scheduling.job.JobHelper;
-import ru.isu.auc.security.model.User;
+import ru.isu.auc.scheduling.api.SchedulerException;
+import ru.isu.auc.scheduling.api.SchedulerService;
+import ru.isu.auc.scheduling.impl.JobHelper;
 import ru.isu.auc.security.service.UserRepo;
-
-import java.util.Optional;
 
 @Controller
 public class TestController {
@@ -24,6 +22,9 @@ public class TestController {
 
     @Autowired
     JobHelper jobHelper;
+
+    @Autowired
+    SchedulerService schedulerService;
 
     @Autowired
     NotificationRepo notificationRepo;
@@ -44,8 +45,7 @@ public class TestController {
             method = RequestMethod.POST
     )
     public void authenticate() throws SchedulerException {
-        Optional<User> user = userRepo.findById(1L);
-        if(user.isEmpty()) return;
-
+        //jobHelper.clearHistory();
+        schedulerService.startJob(228L, 228L, 5000);
     }
 }
