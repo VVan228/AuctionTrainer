@@ -22,6 +22,9 @@ public class IntervalPoint {
     Long queueId;
     Long timestamp;
 
+    boolean autostart;
+    boolean autoend;
+
 
     public IntervalPoint setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
@@ -45,6 +48,16 @@ public class IntervalPoint {
 
     public IntervalPoint setQueueId(Long queueId) {
         this.queueId = queueId;
+        return this;
+    }
+
+    public IntervalPoint setAutostart(boolean autostart) {
+        this.autostart = autostart;
+        return this;
+    }
+
+    public IntervalPoint setAutoend(boolean autoend) {
+        this.autoend = autoend;
         return this;
     }
 

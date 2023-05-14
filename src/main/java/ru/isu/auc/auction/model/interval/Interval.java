@@ -25,6 +25,7 @@ public class Interval {
     IntervalType type;
     UUID entityUid;
     Boolean autostart;
+    Boolean autoend;
 
     @OneToMany(
         cascade=CascadeType.ALL,
@@ -63,6 +64,11 @@ public class Interval {
 
     public Interval setIntervals(List<Interval> intervals) {
         this.intervals = intervals;
+        return this;
+    }
+
+    public Interval setAutoend(Boolean autoend) {
+        this.autoend = autoend;
         return this;
     }
 }
