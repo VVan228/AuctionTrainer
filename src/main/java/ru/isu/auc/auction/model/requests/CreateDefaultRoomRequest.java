@@ -13,8 +13,10 @@ public class CreateDefaultRoomRequest {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime startTime;
     BetParams defaultBetParams;
+
     Long defaultRoundPause;
     Long defaultLotPause;
     Long defaultLotDuration;
+
     List<RoundRequestPart> rounds;
 }

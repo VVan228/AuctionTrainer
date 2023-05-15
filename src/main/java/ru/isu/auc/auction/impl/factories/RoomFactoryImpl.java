@@ -120,17 +120,17 @@ public class RoomFactoryImpl implements RoomFactory {
                 resLots.add(lotEntity);
 
                 Interval lotInterval = intervalFactory.createLot(
-                    //getLotDuration(request, round, lot),
                     settingHandler.resolveSetting(
                         List.of("defaultLotDuration", "duration"),
                         Arrays.asList(lot, round, request)
                     ),
-                    lotEntity.getUid()
+                    lotEntity.getUid(),
+                    lot.getAutostart(),
+                    lot.getAutoend()
                 );
 
                 lots.add(lotInterval);
 
-                //Long pauseDur = getLotPause(request, round, lot);
                 Long pauseDur = settingHandler.resolveSetting(
                     List.of("defaultLotPause", "pauseAfter"),
                     Arrays.asList(lot, round, request)
@@ -151,17 +151,19 @@ public class RoomFactoryImpl implements RoomFactory {
 
             Interval roundInterval = intervalFactory.createRound(
                 lots,
-                roundEntity.getUid()
+                roundEntity.getUid(),
+                round.getAutostart(),
+                round.getAutoend()
             );
 
             rounds.add(roundInterval);
 
-            //Long pauseDur = getRoundPause(request, round);
             Long pauseDur = settingHandler.resolveSetting(
                 List.of("defaultRoundPause","roundPause"),
                 Arrays.asList(round, request)
             );
-            if(i == roundLen-1 || pauseDur == 0L) {
+
+            if(i == roundLen-1 || pauseDur == null || pauseDur == 0L) {
                 continue;
             }
             Interval roundPause = intervalFactory.createRoundPause(

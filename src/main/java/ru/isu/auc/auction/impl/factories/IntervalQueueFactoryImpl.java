@@ -1,16 +1,15 @@
 package ru.isu.auc.auction.impl.factories;
 
+import org.springframework.stereotype.Component;
 import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
-import ru.isu.auc.auction.model.interval.Interval;
-import ru.isu.auc.auction.model.interval.IntervalPoint;
-import ru.isu.auc.auction.model.interval.IntervalQueue;
+import ru.isu.auc.auction.model.interval.*;
 import ru.isu.auc.auction.model.room.Room;
-import ru.isu.auc.common.api.AbstractFactory;
 import ru.isu.auc.common.impl.DefaultHashMap;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Component
 public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
     @Override
     public IntervalQueue createFromIntervals(
@@ -48,10 +47,30 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
         Interval interval
     ) {
         Long endTime = startTime+interval.getDuration();
-        points.get(startTime).addStartId(interval.getId());
-        points.get(endTime).addEndId(interval.getId());
+
+        IntervalPoint startPoint = points.get(startTime);
+        IntervalPoint endPoint = points.get(endTime);
+
+        startPoint.insertStartId(0,
+            new ShortIntervalStart()
+                .setIntervalId(interval.getId())
+                .setAutostart(interval.getAutostart()));
+        if(interval.getAutostart()!=null && !interval.getAutostart())
+            startPoint.setAutostart(false);
+        endPoint.insertEndId(0,
+            new ShortIntervalEnd()
+                .setIntervalId(interval.getId())
+                .setAutoend(interval.getAutoend()));
+        if(interval.getAutoend()!=null && !interval.getAutoend())
+            endPoint.setAutoend(false);
         timestamps.add(endTime);
         timestamps.add(startTime);
+
+//        if(startPoint.getAutostart() == null || startPoint.getAutostart())
+//            startPoint.setAutostart(interval.getAutostart());
+//        if(endPoint.getAutoend() == null || endPoint.getAutoend())
+//            endPoint.setAutoend(interval.getAutoend());
+
 
         Long curTimestamp = startTime;
         for (Interval i: interval.getIntervals()) {

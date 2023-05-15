@@ -10,7 +10,9 @@ public class LotRequestPart {
     String name;
     String description;
     BetParams betParams;
+
     Long duration;
     Long pauseAfter;
-
+    Boolean autostart;
+    Boolean autoend;
 }

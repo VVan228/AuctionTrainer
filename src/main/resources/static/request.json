@@ -6,6 +6,7 @@
   "defaultLotDuration": 15000,
   "rounds": [
     {
+      "autoend": false,
       "ascending": true,
       "roundPause": 500,
       "defaultLotPause": 500,
@@ -35,6 +36,7 @@
     },
     {
       "ascending": false,
+      "autostart": false,
       "lots":[
         {
           "name": "lot3",

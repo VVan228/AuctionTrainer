@@ -15,15 +15,17 @@ public class IntervalPoint {
     private Long id;
 
     @ElementCollection
-    List<Long> intervalStartIds = new ArrayList<>();
+    List<ShortIntervalStart> intervalStartIds = new ArrayList<>();
     @ElementCollection
-    List<Long> intervalEndIds = new ArrayList<>();
+    List<ShortIntervalEnd> intervalEndIds = new ArrayList<>();
     @JsonIgnore
     Long queueId;
     Long timestamp;
 
-    boolean autostart;
-    boolean autoend;
+
+    //TODO: resource
+    Boolean autostart = true;
+    Boolean autoend = true;
 
 
     public IntervalPoint setTimestamp(Long timestamp) {
@@ -36,12 +38,22 @@ public class IntervalPoint {
         return this;
     }
 
-    public IntervalPoint setIntervalStartIds(List<Long> intervalStartIds) {
+    public IntervalPoint setAutostart(Boolean autostart) {
+        this.autostart = autostart;
+        return this;
+    }
+
+    public IntervalPoint setAutoend(Boolean autoend) {
+        this.autoend = autoend;
+        return this;
+    }
+
+    public IntervalPoint setIntervalStartIds(List<ShortIntervalStart> intervalStartIds) {
         this.intervalStartIds = intervalStartIds;
         return this;
     }
 
-    public IntervalPoint setIntervalEndIds(List<Long> intervalEndIds) {
+    public IntervalPoint setIntervalEndIds(List<ShortIntervalEnd> intervalEndIds) {
         this.intervalEndIds = intervalEndIds;
         return this;
     }
@@ -51,22 +63,21 @@ public class IntervalPoint {
         return this;
     }
 
-    public IntervalPoint setAutostart(boolean autostart) {
-        this.autostart = autostart;
-        return this;
-    }
-
-    public IntervalPoint setAutoend(boolean autoend) {
-        this.autoend = autoend;
-        return this;
-    }
-
-    public IntervalPoint addStartId(Long i) {
+    public IntervalPoint addStartId(ShortIntervalStart i) {
         intervalStartIds.add(i);
         return this;
     }
-    public IntervalPoint addEndId(Long i) {
+    public IntervalPoint addEndId(ShortIntervalEnd i) {
         intervalEndIds.add(i);
+        return this;
+    }
+
+    public IntervalPoint insertStartId(int pos, ShortIntervalStart i) {
+        intervalStartIds.add(pos, i);
+        return this;
+    }
+    public IntervalPoint insertEndId(int pos, ShortIntervalEnd i) {
+        intervalEndIds.add(pos, i);
         return this;
     }
 
@@ -75,6 +86,5 @@ public class IntervalPoint {
         return
             " +" + intervalStartIds.toString() +
             "-" + intervalEndIds.toString();
-
     }
 }

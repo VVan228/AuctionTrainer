@@ -14,7 +14,9 @@ import java.util.UUID;
 public class IntervalFactoryImpl implements IntervalFactory {
 
     @Value("${auction.defaults.autostart}")
-    private boolean DEFAULT_AUTOSTART;
+    private boolean DEFAULT_AUTOSTART = true;
+    @Value("${auction.defaults.autoend}")
+    private boolean DEFAULT_AUTOEND = true;
     @Value("${auction.defaults.round_pause}")
     private Long DEFAULT_ROUND_PAUSE;
     @Value("${auction.defaults.lot_pause}")
@@ -25,46 +27,59 @@ public class IntervalFactoryImpl implements IntervalFactory {
 
     @Override
     public Interval createLot(Long duration, UUID entityUid) {
-        return createLot(duration, entityUid, DEFAULT_AUTOSTART);
+        return createLot(duration, entityUid, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
     public Interval createLotPause(Long duration) {
-        return createLotPause(duration, DEFAULT_AUTOSTART);
+        return createLotPause(duration, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
     public Interval createRound(List<Interval> lots, UUID entityUid) {
-        return createRound(lots, entityUid, DEFAULT_AUTOSTART);
+        return createRound(lots, entityUid, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
     public Interval createRoundPause(Long duration) {
-        return createRoundPause(duration, DEFAULT_AUTOSTART);
+        return createRoundPause(duration, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
 
     @Override
-    public Interval createLot(Long duration, UUID entityUid, Boolean autostart) {
+    public Interval createLot(
+        Long duration,
+        UUID entityUid,
+        Boolean autostart,
+        Boolean autoend) {
         return new Interval()
             .setDuration(duration==null?DEFAULT_LOT_DURATION:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
+            .setAutoend(autoend==null?DEFAULT_AUTOEND:autoend)
             .setStatus(Status.SAVED)
             .setType(IntervalType.LOT)
             .setEntityUid(entityUid);
     }
 
     @Override
-    public Interval createLotPause(Long duration, Boolean autostart) {
+    public Interval createLotPause(
+        Long duration,
+        Boolean autostart,
+        Boolean autoend) {
         return new Interval()
             .setDuration(duration==null?DEFAULT_LOT_PAUSE:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
+            .setAutoend(autoend==null?DEFAULT_AUTOEND:autoend)
             .setStatus(Status.SAVED)
             .setType(IntervalType.LOT_PAUSE);
     }
 
     @Override
-    public Interval createRound(List<Interval> lots, UUID entityUid, Boolean autostart) {
+    public Interval createRound(
+        List<Interval> lots,
+        UUID entityUid,
+        Boolean autostart,
+        Boolean autoend) {
         return new Interval()
             .setDuration(
                 lots.stream()
@@ -73,6 +88,7 @@ public class IntervalFactoryImpl implements IntervalFactory {
                     .sum()
             )
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
+            .setAutoend(autoend==null?DEFAULT_AUTOEND:autoend)
             .setStatus(Status.SAVED)
             .setEntityUid(entityUid)
             .setIntervals(lots)
@@ -80,10 +96,14 @@ public class IntervalFactoryImpl implements IntervalFactory {
     }
 
     @Override
-    public Interval createRoundPause(Long duration, Boolean autostart) {
+    public Interval createRoundPause(
+        Long duration,
+        Boolean autostart,
+        Boolean autoend) {
         return new Interval()
             .setDuration(duration==null?DEFAULT_ROUND_PAUSE:duration)
             .setAutostart(autostart==null?DEFAULT_AUTOSTART:autostart)
+            .setAutoend(autoend==null?DEFAULT_AUTOEND:autoend)
             .setStatus(Status.SAVED)
             .setType(IntervalType.ROUND_PAUSE);
     }

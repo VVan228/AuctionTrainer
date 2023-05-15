@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface IntervalService {
     void save(Interval interval);
-    void saveAll(List<Interval> intervals);
+    List<Interval> saveAll(Iterable<Interval> intervals);
+    Interval get(Long intervalId);
 }

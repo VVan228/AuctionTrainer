@@ -36,6 +36,7 @@ public class RoomFactoryTest {
               "defaultLotDuration": 15000,
               "rounds": [
                 {
+                  "autoend": false,
                   "ascending": true,
                   "roundPause": 500,
                   "defaultLotPause": 500,
@@ -65,6 +66,7 @@ public class RoomFactoryTest {
                 },
                 {
                   "ascending": false,
+                  "autostart": false,
                   "lots":[
                     {
                       "name": "lot3",
@@ -83,6 +85,8 @@ public class RoomFactoryTest {
                     }
                   ]
                 }
+                  ]
+                }
               ]
             }
             """;
@@ -96,7 +100,7 @@ public class RoomFactoryTest {
     public void test() {
         var res = roomFactory.createDefaultRoom(request, new User());
         var intervals = res.getValue0().getIntervals();
-        Long id = 0L;
+        Long id = 1L;
         for (var interval : intervals) {
             interval.setId(id++);
             var subIntervals = interval.getIntervals();
@@ -104,8 +108,11 @@ public class RoomFactoryTest {
                 subInterval.setId(id++);
             }
         }
-        Assert.isTrue(intervalQueueFactory.createFromIntervals(res.getValue0())
+        System.out.println(res.getValue0());
+        var res2 = intervalQueueFactory.createFromIntervals(res.getValue0());
+        System.out.println(res2);
+        Assert.isTrue(res2
             .toString().equals(
-                "[ +[0, 1]-[],  +[2]-[1],  +[3]-[2],  +[4]-[0, 3],  +[5, 6]-[4],  +[7]-[6],  +[8]-[7],  +[]-[5, 8]]"));
+                "[ +[2, 1]-[],  +[3]-[2],  +[4]-[3],  +[5]-[4, 1←|],  +[7, 6|→]-[5],  +[8]-[7],  +[9]-[8],  +[]-[9, 6]]"));
     }
 }

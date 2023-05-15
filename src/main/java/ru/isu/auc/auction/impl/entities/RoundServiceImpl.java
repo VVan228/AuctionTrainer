@@ -6,12 +6,19 @@ import ru.isu.auc.auction.api.entities.RoundService;
 import ru.isu.auc.auction.model.room.Round;
 import ru.isu.auc.auction.repo.RoundRepo;
 
+import java.util.List;
+
 @Service
 public class RoundServiceImpl implements RoundService {
     @Autowired
     RoundRepo roundRepo;
     @Override
-    public void save(Round round) {
-        roundRepo.save(round);
+    public Round save(Round round) {
+        return roundRepo.save(round);
+    }
+
+    @Override
+    public List<Round> saveAll(Iterable<Round> rounds) {
+        return roundRepo.saveAll(rounds);
     }
 }

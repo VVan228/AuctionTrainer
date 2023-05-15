@@ -21,15 +21,19 @@ public interface IntervalFactory {
     Interval createLot(
         Long duration,
         UUID entityUid,
-        Boolean autostart);
+        Boolean autostart,
+        Boolean autoend);
     Interval createLotPause(
         Long duration,
-        Boolean autostart);
+        Boolean autostart,
+        Boolean autoend);
     Interval createRound(
         List<Interval> lots,
         UUID entityUid,
-        Boolean autostart);
+        Boolean autostart,
+        Boolean autoend);
     Interval createRoundPause(
         Long duration,
-        Boolean autostart);
+        Boolean autostart,
+        Boolean autoend);
 }

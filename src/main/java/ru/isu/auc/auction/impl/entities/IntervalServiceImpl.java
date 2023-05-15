@@ -19,7 +19,12 @@ public class IntervalServiceImpl implements IntervalService {
     }
 
     @Override
-    public void saveAll(List<Interval> intervals) {
-        intervalRepo.saveAll(intervals);
+    public List<Interval> saveAll(Iterable<Interval> intervals) {
+        return intervalRepo.saveAll(intervals);
+    }
+
+    @Override
+    public Interval get(Long intervalId) {
+        return intervalRepo.getReferenceById(intervalId);
     }
 }
