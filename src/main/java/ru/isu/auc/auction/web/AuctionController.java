@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.isu.auc.auction.api.AuctionService;
 import ru.isu.auc.auction.api.entities.RoomService;
-import ru.isu.auc.auction.impl.AuctionServiceImpl;
 import ru.isu.auc.auction.model.EntityNotFoundException;
 import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.exception.model.AbstractException;
@@ -36,7 +35,7 @@ public class AuctionController {
         Optional<Room> optRoom = roomService.get(roomId);
         Room r = optRoom.orElseThrow(EntityNotFoundException::room);
         if(!r.getCreator().equals(user))
-            throw NotAllowedException.roomNextPoint();
+            throw NotAllowedException.notCreatorOfTheRoom();
 
         auctionService.handleUserAction(r);
     }

@@ -20,7 +20,7 @@ public class BasicExceptionHandlerController {
     @ResponseBody
     @ExceptionHandler(AbstractException.class)
     public ResponseEntity<SendableError> handle(AbstractException ex) {
-        System.out.println("yeehaw");
+        System.out.println("wippidy woppidy this error is being intercepted");
         return new ResponseEntity<>(ex.getError(), ex.getStatus());
     }
 }

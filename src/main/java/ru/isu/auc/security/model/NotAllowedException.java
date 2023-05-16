@@ -13,11 +13,11 @@ public class NotAllowedException extends AbstractException {
         super(status, error);
     }
 
-    public static EntityNotFoundException roomNextPoint(){
+    public static EntityNotFoundException notCreatorOfTheRoom(){
         return new EntityNotFoundException(
             HttpStatus.FORBIDDEN,
             new SendableError()
                 .put("action", "room/nextPoint")
-                .setMessage(DEFAULT_MESSAGE));
+                .setMessage("User is not creator of this room"));
     }
 }

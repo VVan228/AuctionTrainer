@@ -23,7 +23,7 @@ public class NotificationServiceImpl implements NotificationService {
         RoomEventPayload payload = new RoomEventPayload();
         //first point in interval,
         //we need to check prev notifications
-        checkPrevEndNotification(intervalPoint, payload);
+        checkPrevEndNotification(intervalPoint, payload, true);
 
         //we add all autostarts
         for (var intervalStart: intervalPoint.getIntervalStartIds()) {
@@ -84,7 +84,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         //we already sent notification (presumably))
         if(!intervalPoint.getAtLeastOneAutoStart())
-            checkPrevEndNotification(intervalPoint, payload);
+            checkPrevEndNotification(intervalPoint, payload, false);
 
         //we add all manualstarts
         for (var intervalStart: intervalPoint.getIntervalStartIds()) {
@@ -109,7 +109,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     private void checkPrevEndNotification(
         IntervalPoint intervalPoint,
-        RoomEventPayload payload) {
+        RoomEventPayload payload,
+        boolean checkAutoended) {
 
         //in prev interval manuals are latest,
         //we need to send notification
@@ -123,6 +124,7 @@ public class NotificationServiceImpl implements NotificationService {
                     );
                 }
             });
+        if(!checkAutoended) return;
         //if there are no manuals, all are autos,
         //we need to send them all
         if(payload.getIntervalsEnded().isEmpty()) {
