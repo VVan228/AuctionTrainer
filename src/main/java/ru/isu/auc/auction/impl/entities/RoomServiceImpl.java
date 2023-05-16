@@ -9,6 +9,7 @@ import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.auction.model.requests.CreateDefaultRoomRequest;
 import ru.isu.auc.auction.model.room.Room;
+import ru.isu.auc.auction.model.types.Status;
 import ru.isu.auc.auction.repo.RoomRepo;
 import ru.isu.auc.security.model.User;
 

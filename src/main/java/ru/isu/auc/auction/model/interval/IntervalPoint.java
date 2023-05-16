@@ -24,8 +24,11 @@ public class IntervalPoint {
 
 
     //TODO: resource
-    Boolean autostart = true;
-    Boolean autoend = true;
+    Boolean atLeastOneAutoStart = false;
+    Boolean atLeastOneAutoEnd = false;
+
+    Boolean atLeastOneManualStart = false;
+    Boolean atLeastOneManualEnd = false;
 
 
     public IntervalPoint setTimestamp(Long timestamp) {
@@ -38,13 +41,23 @@ public class IntervalPoint {
         return this;
     }
 
-    public IntervalPoint setAutostart(Boolean autostart) {
-        this.autostart = autostart;
+    public IntervalPoint setAtLeastOneAutoStart(Boolean atLeastOneAutoStart) {
+        this.atLeastOneAutoStart = atLeastOneAutoStart;
         return this;
     }
 
-    public IntervalPoint setAutoend(Boolean autoend) {
-        this.autoend = autoend;
+    public IntervalPoint setAtLeastOneAutoEnd(Boolean atLeastOneAutoEnd) {
+        this.atLeastOneAutoEnd = atLeastOneAutoEnd;
+        return this;
+    }
+
+    public IntervalPoint setAtLeastOneManualStart(Boolean atLeastOneManualStart) {
+        this.atLeastOneManualStart = atLeastOneManualStart;
+        return this;
+    }
+
+    public IntervalPoint setAtLeastOneManualEnd(Boolean atLeastOneManualEnd) {
+        this.atLeastOneManualEnd = atLeastOneManualEnd;
         return this;
     }
 

@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.model.interval;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,9 +25,11 @@ public class Interval {
     Status status;
     IntervalType type;
     UUID entityUid;
+
     Boolean autostart;
     Boolean autoend;
 
+    @JsonIgnore
     @OneToMany(
         cascade=CascadeType.ALL,
         fetch = FetchType.LAZY)

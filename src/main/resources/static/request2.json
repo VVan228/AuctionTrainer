@@ -1,13 +1,12 @@
 {
-  "name": "greatestRoom",
-  "startTime": "2023-05-15 19:30:00",
-  "defaultLotPause": 1000,
+  "name": "greatestRoomWithoutSchedule",
+  "startTime": "2023-05-11 10:00:00",
   "defaultLotDuration": 15000,
   "rounds": [
     {
-      "autoend":false,
+      "autostart": false,
+      "autoend": false,
       "ascending": true,
-      "defaultLotPause": 500,
       "defaultLotDuration": 1400,
       "defaultBetParams": {
         "startSum": 400,
@@ -16,10 +15,11 @@
       },
       "lots":[
         {
+          "autostart": false,
+          "autoend": false,
           "name": "lot1",
           "description": "desc",
           "duration": 300,
-          "pauseAfter": 10,
           "betParams":{
             "startSum": 450,
             "limitSum": 850,
@@ -27,20 +27,24 @@
           }
         },
         {
+          "autostart": false,
+          "autoend": false,
           "name": "lot2",
           "description": "desc"
         }
       ]
     },
     {
-      "autostart": false,
       "ascending": false,
+      "autostart": false,
+      "autoend": false,
       "lots":[
         {
+          "autostart": false,
+          "autoend": false,
           "name": "lot3",
           "description": "desc",
           "duration": 302,
-          "pauseAfter": 12,
           "betParams":{
             "startSum": 453,
             "limitSum": 853,
@@ -48,7 +52,8 @@
           }
         },
         {
-          "duration": 1000,
+          "autostart": false,
+          "autoend": false,
           "name": "lot4",
           "description": "desc"
         }

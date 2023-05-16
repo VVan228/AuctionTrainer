@@ -51,18 +51,33 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
         IntervalPoint startPoint = points.get(startTime);
         IntervalPoint endPoint = points.get(endTime);
 
+        if(startPoint.getAtLeastOneManualStart())
+            interval.setAutostart(false);
+
         startPoint.insertStartId(0,
             new ShortIntervalStart()
                 .setIntervalId(interval.getId())
                 .setAutostart(interval.getAutostart()));
-        if(interval.getAutostart()!=null && !interval.getAutostart())
-            startPoint.setAutostart(false);
+
+        if(interval.getAutostart())
+            startPoint.setAtLeastOneAutoStart(true);
+        if(!interval.getAutostart())
+            startPoint.setAtLeastOneManualStart(true);
+
+        //
+        if(endPoint.getAtLeastOneAutoEnd())
+            interval.setAutoend(true);
+
         endPoint.insertEndId(0,
             new ShortIntervalEnd()
                 .setIntervalId(interval.getId())
                 .setAutoend(interval.getAutoend()));
-        if(interval.getAutoend()!=null && !interval.getAutoend())
-            endPoint.setAutoend(false);
+
+        if(interval.getAutoend())
+            endPoint.setAtLeastOneAutoEnd(true);
+        if(!interval.getAutoend())
+            endPoint.setAtLeastOneManualEnd(true);
+
         timestamps.add(endTime);
         timestamps.add(startTime);
 

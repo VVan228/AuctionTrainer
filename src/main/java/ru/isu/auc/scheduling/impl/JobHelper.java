@@ -18,43 +18,43 @@ public class JobHelper implements SchedulerService {
     SchedulerFactoryBean schedulerFactory;
 
     final String TRIGGER_KEY = "IntervalTrigger";
-    final String TRIGGER_GROUP = "%d";
-    final String JOB_KEY = "IntervalPointJob/%d_%d";
+    final String TRIGGER_GROUP = "%d_%d.%d";
+    final String JOB_KEY = "IntervalPointJob/%d_%d.%d";
 
     public JobHelper(SchedulerFactoryBean schedulerFactory) {
         this.schedulerFactory = schedulerFactory;
     }
 
-    private JobDetail jobDetail(Long queueId, Long index) {
+    private JobDetail jobDetail(Long queueId, Long index, int cycle) {
         return newJob()
             .ofType(SampleJob.class)
             .storeDurably()
-            .withIdentity(JobKey.jobKey(String.format(JOB_KEY, queueId, index)))
+            .withIdentity(JobKey.jobKey(String.format(JOB_KEY, queueId, index, cycle)))
             .withDescription("Scheduled notification")
             .usingJobData("queueId", queueId)
             .usingJobData("index", index)
             .build();
     }
 
-    private Trigger trigger(JobDetail job, DateTime dateTime, Long queueId) {
+    private Trigger trigger(JobDetail job, DateTime dateTime, Long queueId, Long index, int cycle) {
         return newTrigger()
             .forJob(job)
             .withIdentity(
                 TriggerKey.triggerKey(
                     TRIGGER_KEY,
-                    String.format(TRIGGER_GROUP, queueId)))
+                    String.format(TRIGGER_GROUP, queueId, index, cycle)))
             .withDescription("Notification trigger")
             .startAt(dateTime.toDate())
             .build();
     }
 
     @Override
-    public void startJob(Long queueId, Long index, DateTime dateTime) throws SchedulerException {
+    public void startJob(int cycle, Long queueId, Long index, DateTime dateTime) throws SchedulerException {
         try {
             Scheduler scheduler = schedulerFactory.getScheduler();
 
-            JobDetail jobDetail = jobDetail(queueId, index);
-            Trigger trigger = trigger(jobDetail, dateTime, queueId);
+            JobDetail jobDetail = jobDetail(queueId, index, cycle);
+            Trigger trigger = trigger(jobDetail, dateTime, queueId, index, cycle);
 
             scheduler.scheduleJob(jobDetail, trigger);
 
@@ -66,8 +66,8 @@ public class JobHelper implements SchedulerService {
     }
 
     @Override
-    public void startJob(Long queueId, Long index, Integer duration) throws SchedulerException {
-        startJob(queueId, index, DateTime.now().plusMillis(duration));
+    public void startJob(int cycle, Long queueId, Long index, Integer duration) throws SchedulerException {
+        startJob(cycle, queueId, index, DateTime.now().plusMillis(duration));
     }
 
     @Override
