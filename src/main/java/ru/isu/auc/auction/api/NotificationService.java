@@ -1,6 +1,8 @@
 package ru.isu.auc.auction.api;
 
 import ru.isu.auc.auction.model.interval.IntervalPoint;
+import ru.isu.auc.auction.model.room.Room;
+import ru.isu.auc.security.model.User;
 
 public interface NotificationService {
     /**
@@ -29,4 +31,7 @@ public interface NotificationService {
      *        Точка на интервале, о событиях которой нужно уведомить
      */
     void sendManualStartNotifications(IntervalPoint intervalPoint);
+
+    void sendConnectionNotification(User user, Room room, int participants);
+    void sendDisconnectionNotification(User user, Room room, int participants);
 }

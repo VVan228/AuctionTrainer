@@ -14,9 +14,9 @@ public class RoomEventPayload implements IPayload {
     Status roomStatus;
 
     public void addIntervalStart(Interval interval){
-        intervalsStarted.add(0, interval);
+        intervalsStarted.add(interval);
     }
     public void addIntervalEnd(Interval interval){
-        intervalsEnded.add(0, interval);
+        intervalsEnded.add(interval);
     }
 }

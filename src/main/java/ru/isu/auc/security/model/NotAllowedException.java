@@ -20,4 +20,20 @@ public class NotAllowedException extends AbstractException {
                 .put("action", "room/nextPoint")
                 .setMessage("User is not creator of this room"));
     }
+
+    public static EntityNotFoundException notInRoom(){
+        return new EntityNotFoundException(
+            HttpStatus.FORBIDDEN,
+            new SendableError()
+                .put("action", "room/nextPoint")
+                .setMessage("User is not participant of the room"));
+    }
+
+    public static EntityNotFoundException alreadyInRoom(){
+        return new EntityNotFoundException(
+            HttpStatus.FORBIDDEN,
+            new SendableError()
+                .put("action", "room/nextPoint")
+                .setMessage("User is already participant of the room"));
+    }
 }

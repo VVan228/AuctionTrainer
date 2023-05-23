@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface IntervalQueueFactory {
     IntervalQueue createFromIntervals(Room room);
+    void saveIds(IntervalQueue q);
 }

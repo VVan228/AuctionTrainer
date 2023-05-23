@@ -1,5 +1,7 @@
 package ru.isu.auc.security.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 import jakarta.validation.constraints.NotBlank;
@@ -20,13 +22,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "Empty password")
     String password;
     @NotBlank(message = "Empty email")
     String email;
     @NotBlank(message = "Empty username")
     String username;
+    @JsonIgnore
     String currentRefreshTokenHash;
+    @JsonIgnore
     Role role;
 
 }

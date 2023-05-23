@@ -21,6 +21,10 @@ public class UserService {
         return userRepo.getByEmail(email);
     }
 
+    public User getByUsername(String username){
+        return userRepo.getByUsername(username);
+    }
+
     @Transactional
     public void replaceRefreshToken(Long id, String refreshToken){
         userRepo.replaceRefreshToken(id, refreshToken);

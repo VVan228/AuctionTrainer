@@ -9,7 +9,7 @@ import org.hibernate.annotations.Type;
 import ru.isu.auc.auction.model.notification.payload.IPayload;
 import ru.isu.auc.auction.model.types.NotificationType;
 
-@Entity
+//@Entity
 @Data
 public class Notification <P extends IPayload> {
 
@@ -17,8 +17,8 @@ public class Notification <P extends IPayload> {
         return new Notification<Q>().setPayload(p);
     }
 
-    @Type(JsonType.class)
-    @Column(columnDefinition = "json")
+    //@Type(JsonType.class)
+    //@Column(columnDefinition = "json")
     P payload;
 
     public Notification<P> setPayload(P payload) {
@@ -26,8 +26,8 @@ public class Notification <P extends IPayload> {
         return this;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
 }

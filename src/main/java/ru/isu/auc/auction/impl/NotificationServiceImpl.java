@@ -2,13 +2,18 @@ package ru.isu.auc.auction.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.isu.auc.auction.api.ChannelProvider;
 import ru.isu.auc.auction.api.NotificationService;
 import ru.isu.auc.auction.api.entities.IntervalService;
 import ru.isu.auc.auction.model.interval.IntervalPoint;
 import ru.isu.auc.auction.model.notification.Notification;
 import ru.isu.auc.auction.model.notification.payload.RoomEventPayload;
+import ru.isu.auc.auction.model.notification.payload.UserJoinedPayload;
+import ru.isu.auc.auction.model.notification.payload.UserLeftPayload;
+import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.types.Status;
 import ru.isu.auc.messaging.service.MessagingService;
+import ru.isu.auc.security.model.User;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -17,6 +22,9 @@ public class NotificationServiceImpl implements NotificationService {
     IntervalService intervalService;
     @Autowired
     MessagingService messagingService;
+
+    @Autowired
+    ChannelProvider channelProvider;
 
     @Override
     public void sendIntervalPointNotifications(IntervalPoint intervalPoint) {
@@ -43,7 +51,11 @@ public class NotificationServiceImpl implements NotificationService {
         }
         messagingService.sendNotification(
             Notification.createFromPayload(payload),
-            "test");
+            channelProvider.getChannel(
+                intervalService.getRoomIdByQueueId(
+                    intervalPoint.getQueueId()),
+                false)
+        );
 
     }
 
@@ -74,7 +86,11 @@ public class NotificationServiceImpl implements NotificationService {
         }
         messagingService.sendNotification(
             Notification.createFromPayload(payload),
-            "test");
+            channelProvider.getChannel(
+                intervalService.getRoomIdByQueueId(
+                    intervalPoint.getQueueId()),
+                false)
+        );
 
     }
 
@@ -95,6 +111,16 @@ public class NotificationServiceImpl implements NotificationService {
                         Status.ONGOING));
             }
         }
+        if(payload.getIntervalsStarted().isEmpty()){
+            for (var intervalStart: intervalPoint.getIntervalStartIds()) {
+                if(intervalStart.getAutostart()) {
+                    payload.addIntervalStart(
+                        intervalService.setStatus(
+                            intervalStart.getIntervalId(),
+                            Status.ONGOING));
+                }
+            }
+        }
 
         //we check room state
         if(intervalPoint.getIntervalStartIds().isEmpty()) {
@@ -104,7 +130,11 @@ public class NotificationServiceImpl implements NotificationService {
         }
         messagingService.sendNotification(
             Notification.createFromPayload(payload),
-            "test");
+            channelProvider.getChannel(
+                intervalService.getRoomIdByQueueId(
+                    intervalPoint.getQueueId()),
+                false)
+        );
     }
 
     private void checkPrevEndNotification(
@@ -139,5 +169,33 @@ public class NotificationServiceImpl implements NotificationService {
                     }
                 });
         }
+    }
+
+    @Override
+    public void sendConnectionNotification(User user, Room room, int participants) {
+        UserJoinedPayload payload = new UserJoinedPayload()
+            .setUserId(user.getId())
+            .setUsername(user.getUsername())
+            .setCurrentAmount(participants);
+
+        messagingService.sendNotification(
+            Notification.createFromPayload(payload),
+            channelProvider.getChannel(
+                room.getId(),
+                false));
+    }
+
+    @Override
+    public void sendDisconnectionNotification(User user, Room room, int participants) {
+        UserLeftPayload payload = new UserLeftPayload()
+            .setUserId(user.getId())
+            .setUsername(user.getUsername())
+            .setCurrentAmount(participants);
+
+        messagingService.sendNotification(
+            Notification.createFromPayload(payload),
+            channelProvider.getChannel(
+                room.getId(),
+                false));
     }
 }

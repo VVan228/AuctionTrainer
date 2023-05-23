@@ -40,6 +40,13 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
             );
     }
 
+    @Override
+    public void saveIds(IntervalQueue q) {
+        for(var ip: q.getIntervalPoints()){
+            ip.setQueueId(q.getId());
+        }
+    }
+
     private void addTimestamps(
         Map<Long, IntervalPoint> points,
         Set<Long> timestamps,

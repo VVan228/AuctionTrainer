@@ -1,5 +1,6 @@
 package ru.isu.auc.auction.model.room;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
 

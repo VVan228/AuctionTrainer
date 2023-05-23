@@ -141,8 +141,7 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
             0,
             intervalQueueService.getIntervalQIdByRoomUid(room.getUid()),
             0L,
-            //TODO: bring back
-            1000//time
+            time
             );
     }
 
@@ -214,8 +213,8 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
 
         //if all are autostarts, we need to start room,
         //therefore no need to send empty notification
-        if(curPi.getAtLeastOneManualStart())
-            notificationService.sendManualStartNotifications(curPi);
+        //if(curPi.getAtLeastOneManualStart())
+        notificationService.sendManualStartNotifications(curPi);
             //manualStartNotification(curPi); (old)
 
         //if there are autoends, but alse manuals, we schedule same point

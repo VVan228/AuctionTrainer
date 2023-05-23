@@ -1,23 +1,28 @@
 package ru.isu.auc.auction.model.room;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.isu.auc.auction.model.BaseEntity;
+import ru.isu.auc.auction.model.types.Status;
 
 import java.util.UUID;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Round extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    Boolean ascending;
 
     UUID roomUid;
-    Boolean ascending;
+
 
     public Round setId(Long id) {
         this.id = id;

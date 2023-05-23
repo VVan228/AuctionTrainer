@@ -8,11 +8,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     property = "type")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = RoomEventPayload.class, name = "room:event"),
-    @JsonSubTypes.Type(value = TeamCaptainChangedPayload.class, name = "teams:captainChanged"),
-    @JsonSubTypes.Type(value = TeamConnectedPayload.class, name = "teams:connected"),
-    @JsonSubTypes.Type(value = TeamUserJoinedPayload.class, name = "teams:userJoined"),
-    @JsonSubTypes.Type(value = UserPayload.class, name = "users:connected"),
-    @JsonSubTypes.Type(value = UserPayload.class, name = "users:disconnected")
+    @JsonSubTypes.Type(value = UserJoinedPayload.class, name = "users:joinedRoom"),
+    @JsonSubTypes.Type(value = UserLeftPayload.class, name = "users:leftRoom"),
 })
 public interface IPayload {
 }

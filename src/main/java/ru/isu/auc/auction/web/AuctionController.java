@@ -28,7 +28,7 @@ public class AuctionController {
         value="/auction/nextPoint",
         method = RequestMethod.POST
     )
-    public void createRoom(
+    public void nextPoint(
         @RequestParam Long roomId)
     throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();

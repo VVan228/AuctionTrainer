@@ -1,4 +1,4 @@
-package ru.isu.auc.auction.model.requests;
+package ru.isu.auc.auction.model.dto.request;
 
 import lombok.Data;
 import ru.isu.auc.auction.model.room.BetParams;

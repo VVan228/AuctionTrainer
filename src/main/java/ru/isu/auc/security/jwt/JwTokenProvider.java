@@ -39,10 +39,11 @@ public class JwTokenProvider {
         this.userDetailsService = userDetailsService;
     }
 
-    public String createAccessToken(String email, String role, Long userId){
-        Claims claims = Jwts.claims().setSubject(email);
+    public String createAccessToken(String username, String email, String role, Long userId){
+        Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
         claims.put("userId", userId);
+        claims.put("email", email);
         Date now = new Date();
         Date validity = new Date(now.getTime() + accessValidity * 1000);
 
@@ -54,9 +55,10 @@ public class JwTokenProvider {
                 .compact();
     }
 
-    public String createRefreshToken(String email, String role){
-        Claims claims = Jwts.claims().setSubject(email);
+    public String createRefreshToken(String username, String email, String role){
+        Claims claims = Jwts.claims().setSubject(username);
         claims.put("role", role);
+        claims.put("email", email);
         Date now = new Date();
         Date validity = new Date(now.getTime() + refreshValidity * 1000);
 
@@ -77,12 +79,12 @@ public class JwTokenProvider {
         }
     }
 
-    public String getEmail(String token) {
+    public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getEmail(token));
+        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

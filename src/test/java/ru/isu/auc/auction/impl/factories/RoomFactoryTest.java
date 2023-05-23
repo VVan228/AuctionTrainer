@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.common.impl.SettingHandlerImpl;
-import ru.isu.auc.auction.model.requests.CreateDefaultRoomRequest;
+import ru.isu.auc.auction.model.dto.request.CreateDefaultRoomRequest;
 import ru.isu.auc.security.model.User;
 
 public class RoomFactoryTest {
 
-    RoomFactory roomFactory;
+    RoomFactory<CreateDefaultRoomRequest> roomFactory;
 
     IntervalQueueFactory intervalQueueFactory;
 
@@ -22,7 +22,7 @@ public class RoomFactoryTest {
 
     @BeforeEach
     public void setUp() throws JsonProcessingException {
-        roomFactory = new RoomFactoryImpl(
+        roomFactory = new DefaultRoomFactory(
             new IntervalFactoryImpl(),
             new SettingHandlerImpl()
         );
@@ -98,7 +98,7 @@ public class RoomFactoryTest {
 
     @Test
     public void test() {
-        var res = roomFactory.createDefaultRoom(request, new User());
+        var res = roomFactory.createRoom(request, new User());
         var intervals = res.getValue0().getIntervals();
         Long id = 1L;
         for (var interval : intervals) {

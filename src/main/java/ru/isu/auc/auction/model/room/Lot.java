@@ -1,8 +1,14 @@
 package ru.isu.auc.auction.model.room;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Data;
 import ru.isu.auc.auction.model.BaseEntity;
+import ru.isu.auc.auction.model.types.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,6 +21,11 @@ public class Lot extends BaseEntity {
     String description;
     @Embedded
     BetParams betParams;
+
+    @ElementCollection
+    List<ParticipantBet> bets = new ArrayList<>();
+    ParticipantBet winner;
+
 
     public Lot setId(Long id) {
         this.id = id;
@@ -33,6 +44,11 @@ public class Lot extends BaseEntity {
 
     public Lot setBetParams(BetParams betParams) {
         this.betParams = betParams;
+        return this;
+    }
+
+    public Lot addBet(ParticipantBet bet) {
+        bets.add(bet);
         return this;
     }
 }

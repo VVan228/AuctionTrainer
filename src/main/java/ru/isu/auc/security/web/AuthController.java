@@ -52,8 +52,8 @@ public class AuthController {
             @RequestBody AuthRequest authRequest
     ){
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
             User user = userService.getByEmail(authRequest.getEmail());
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), authRequest.getPassword()));
 
             return updateTokens(user);
 
@@ -80,8 +80,8 @@ public class AuthController {
         String refreshToken = updateTokenRequest.getRefresh_token();
 
         boolean isValid = jwtTokenProvider.validateToken(refreshToken);
-        String email = jwtTokenProvider.getEmail(refreshToken);
-        User user = userService.getByEmail(email);
+        String username = jwtTokenProvider.getUsername(refreshToken);
+        User user = userService.getByUsername(username);
 
         boolean isLast = passwordEncoder.matches(refreshToken,user.getCurrentRefreshTokenHash());
 
@@ -106,7 +106,12 @@ public class AuthController {
     ){
         if(userService.getByEmail(user.getEmail()) != null){
             Map<String, String> response = new HashMap<>();
-            response.put("message", "already registered");
+            response.put("message", "email is taken");
+            return ResponseEntity.badRequest().body(response);
+        }
+        if(userService.getByUsername(user.getUsername()) != null){
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "username is taken");
             return ResponseEntity.badRequest().body(response);
         }
 
@@ -119,8 +124,8 @@ public class AuthController {
 
 
     private ResponseEntity<Map<String, String>> updateTokens(User user){
-        String access_token = jwtTokenProvider.createAccessToken(user.getEmail(), user.getRole().name(), user.getId());
-        String refresh_token = jwtTokenProvider.createRefreshToken(user.getEmail(), user.getRole().name());
+        String access_token = jwtTokenProvider.createAccessToken(user.getUsername(), user.getEmail(), user.getRole().name(), user.getId());
+        String refresh_token = jwtTokenProvider.createRefreshToken(user.getUsername(), user.getEmail(), user.getRole().name());
 
         userService.replaceRefreshToken(user, passwordEncoder.encode(refresh_token));
 

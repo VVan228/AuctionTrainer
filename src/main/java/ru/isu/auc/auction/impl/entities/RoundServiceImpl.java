@@ -7,6 +7,7 @@ import ru.isu.auc.auction.model.room.Round;
 import ru.isu.auc.auction.repo.RoundRepo;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RoundServiceImpl implements RoundService {
@@ -20,5 +21,15 @@ public class RoundServiceImpl implements RoundService {
     @Override
     public List<Round> saveAll(Iterable<Round> rounds) {
         return roundRepo.saveAll(rounds);
+    }
+
+    @Override
+    public Round findByUid(UUID uid) {
+        return roundRepo.findByUid(uid);
+    }
+
+    @Override
+    public Round findByLotId(Long lotId) {
+        return roundRepo.findByLotId(lotId);
     }
 }
