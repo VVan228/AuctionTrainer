@@ -34,4 +34,18 @@ public class User {
     @JsonIgnore
     Role role;
 
+    public User setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public User setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public User setUsername(String username) {
+        this.username = username;
+        return this;
+    }
 }

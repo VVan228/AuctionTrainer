@@ -37,4 +37,12 @@ public class EntityNotFoundException extends AbstractException {
                 .put("entity", "connectedUsers")
                 .setMessage(DEFAULT_MESSAGE));
     }
+
+    public static EntityNotFoundException template(){
+        return new EntityNotFoundException(
+            HttpStatus.BAD_REQUEST,
+            new SendableError()
+                .put("entity", "template")
+                .setMessage(DEFAULT_MESSAGE));
+    }
 }

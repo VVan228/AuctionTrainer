@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.isu.auc.security.jwt.JwTokenProvider;
 import ru.isu.auc.security.model.Role;
 import ru.isu.auc.security.model.User;
-import ru.isu.auc.security.model.requests.AuthRequest;
-import ru.isu.auc.security.model.requests.UpdateTokenRequest;
+import ru.isu.auc.security.model.dto.requests.AuthRequest;
+import ru.isu.auc.security.model.dto.requests.UpdateTokenRequest;
 import ru.isu.auc.security.service.UserService;
 
 import java.util.HashMap;

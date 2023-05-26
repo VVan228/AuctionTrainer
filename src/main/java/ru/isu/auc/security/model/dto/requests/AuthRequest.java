@@ -1,4 +1,4 @@
-package ru.isu.auc.security.model.requests;
+package ru.isu.auc.security.model.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

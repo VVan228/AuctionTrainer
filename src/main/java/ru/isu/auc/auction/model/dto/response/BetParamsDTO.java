@@ -16,4 +16,19 @@ public class BetParamsDTO {
         this.limitSum = bp.getLimitSum();
         this.minBetStep = bp.getMinBetStep();
     }
+
+    public BetParamsDTO setStartSum(Integer startSum) {
+        this.startSum = startSum;
+        return this;
+    }
+
+    public BetParamsDTO setLimitSum(Integer limitSum) {
+        this.limitSum = limitSum;
+        return this;
+    }
+
+    public BetParamsDTO setMinBetStep(Integer minBetStep) {
+        this.minBetStep = minBetStep;
+        return this;
+    }
 }

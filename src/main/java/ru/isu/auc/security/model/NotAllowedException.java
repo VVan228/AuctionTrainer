@@ -36,4 +36,27 @@ public class NotAllowedException extends AbstractException {
                 .put("action", "room/nextPoint")
                 .setMessage("User is already participant of the room"));
     }
+
+    public static NotAllowedException alreadyApproved(){
+        return new NotAllowedException(
+            HttpStatus.FORBIDDEN,
+            new SendableError()
+                .put("action", "template/approve")
+                .setMessage("User already approved this template"));
+    }
+    public static NotAllowedException notApproved(){
+        return new NotAllowedException(
+            HttpStatus.FORBIDDEN,
+            new SendableError()
+                .put("action", "template/unapprove")
+                .setMessage("User did not approve this template"));
+    }
+
+    public static NotAllowedException templateIsPrivate(){
+        return new NotAllowedException(
+            HttpStatus.FORBIDDEN,
+            new SendableError()
+                .put("action", "template/approve")
+                .setMessage("Template is private"));
+    }
 }
