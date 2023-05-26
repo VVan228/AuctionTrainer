@@ -65,4 +65,21 @@ public class Room extends BaseEntity {
         this.roomType = roomType;
         return this;
     }
+
+    public Status getStatus() {
+        Status roomStartStatus = getIntervals().get(0).getStatus();
+        Status roomEndStatus = getIntervals()
+            .get(getIntervals().size()-1).getStatus();
+
+        if(roomEndStatus.equals(Status.ENDED)) {
+            return Status.ENDED;
+        }
+        if(getStartTime()!=null && LocalDateTime.now().isAfter(getStartTime())) {
+            return Status.ONGOING;
+        }
+        if(roomStartStatus.equals(Status.ONGOING) || roomStartStatus.equals(Status.ENDED)) {
+            return Status.ONGOING;
+        }
+        return Status.SAVED;
+    }
 }

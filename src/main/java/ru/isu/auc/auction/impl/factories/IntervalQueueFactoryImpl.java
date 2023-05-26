@@ -72,8 +72,8 @@ public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
             startPoint.setAtLeastOneManualStart(true);
 
         //
-        if(endPoint.getAtLeastOneAutoEnd())
-            interval.setAutoend(true);
+        //if(endPoint.getAtLeastOneAutoEnd())
+        //    interval.setAutoend(true);
 
         endPoint.insertEndId(0,
             new ShortIntervalEnd()

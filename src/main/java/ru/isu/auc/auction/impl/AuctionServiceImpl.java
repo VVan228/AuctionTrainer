@@ -3,6 +3,7 @@ package ru.isu.auc.auction.impl;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import org.joda.time.DateTime;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.AuctionService;
 import ru.isu.auc.auction.api.NotificationService;
@@ -16,7 +17,9 @@ import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.types.Status;
 import ru.isu.auc.scheduling.api.SchedulerException;
 import ru.isu.auc.scheduling.api.SchedulerService;
+import ru.isu.auc.scheduling.impl.JobHelper;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Service
@@ -26,6 +29,9 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
     final SchedulerService schedulerService;
     final IntervalService intervalService;
     final NotificationService notificationService;
+
+    @Autowired
+    JobHelper jobHelper;
 
     public AuctionServiceImpl(
         IntervalQueueService intervalQueueService,
@@ -133,6 +139,7 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
         if(room.getStartTime()==null) {
             return;
         }
+        jobHelper.clearHistory();
         var time = new DateTime(
             room.getStartTime().atZone(ZoneId.systemDefault())
                 .toInstant().toEpochMilli());
@@ -158,6 +165,11 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
         Interval firstStartInterval = intervalService.get(
             ip.getIntervalStartIds().get(0)
                 .getIntervalId());
+
+        if(room.getStatus().equals(Status.SAVED)){
+            handleIntervalPoint(q, i);
+            return;
+        }
 
         if(
             (i==0 || ip.getAtLeastOneManualStart()) &&

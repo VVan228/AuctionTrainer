@@ -129,7 +129,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     private RoomSingleLayer getSingleLayerRoom(Room room) {
-        RoomSingleLayer res = new RoomSingleLayer(room, getRoomStatus(room));
+        RoomSingleLayer res = new RoomSingleLayer(room, room.getStatus());
 
 
         var users = connectedUsersRepo.findById(room.getId())
@@ -160,29 +160,12 @@ public class RoomServiceImpl implements RoomService {
         return res;
     }
 
-    private Status getRoomStatus(Room room) {
-        Status roomStartStatus = room.getIntervals().get(0).getStatus();
-        Status roomEndStatus = room.getIntervals()
-            .get(room.getIntervals().size()-1).getStatus();
-
-        if(roomEndStatus.equals(Status.ENDED)) {
-            return Status.ENDED;
-        }
-        if(room.getStartTime()!=null && LocalDateTime.now().isAfter(room.getStartTime())) {
-            return Status.ONGOING;
-        }
-        if(roomStartStatus.equals(Status.ONGOING) || roomStartStatus.equals(Status.ENDED)) {
-            return Status.ONGOING;
-        }
-        return Status.SAVED;
-    }
-
     @Override
     @Transactional
     public void joinRoom(User user, Long roomId) throws AbstractException {
         Room room = roomRepo.findById(roomId).orElseThrow(EntityNotFoundException::room);
 
-        Status roomStatus = getRoomStatus(room);
+        Status roomStatus = room.getStatus();
         if(roomStatus.equals(Status.ONGOING)||roomStatus.equals(Status.ENDED))
             throw InvalidRequestException.roomIsAlreadyGoing();
 
@@ -203,7 +186,7 @@ public class RoomServiceImpl implements RoomService {
     public void leaveRoom(User user, Long roomId) throws AbstractException {
         Room room = roomRepo.findById(roomId).orElseThrow(EntityNotFoundException::room);
 
-        Status roomStatus = getRoomStatus(room);
+        Status roomStatus = room.getStatus();
         if(roomStatus.equals(Status.ONGOING)||roomStatus.equals(Status.ENDED))
             throw InvalidRequestException.roomIsAlreadyGoing();
 
