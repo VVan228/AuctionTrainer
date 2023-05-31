@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.model.EntityNotFoundException;
@@ -18,6 +19,7 @@ import ru.isu.auc.templates.repo.TemplateApprovalRepo;
 import ru.isu.auc.templates.repo.TemplateRepo;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Service
 public class TemplateServiceImpl implements TemplateService {
@@ -40,6 +42,10 @@ public class TemplateServiceImpl implements TemplateService {
             .setCreationTime(LocalDateTime.now())
             .setDefault(false)
             .setApprovesAmount(0);
+        template.getData().getRounds().forEach(r->{
+            if(r.getAscending()==null)
+                r.setAscending(true);
+        });
         template = templateRepo.save(template);
         templateApprovalRepo.save(new TemplateApproval().setTemplateId(template.getId()));
     }
@@ -84,22 +90,32 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
-    public Page<Template> getUserTemplates(Long userId) throws AbstractException {
-        return templateRepo.getUserTemplates(PageRequest.of(
-                0,
-                10,
-                Sort.Direction.ASC,
-                "id"
-            ), userId);
+    public Page<Template> getUserTemplates(Pageable p, Long userId) throws AbstractException {
+        return templateRepo.getUserTemplates(p, userId);
     }
 
     @Override
-    public Page<Template> getPublicTemplates() throws AbstractException {
-        return templateRepo.getPublicTemplates(PageRequest.of(
-            0,
-            10,
-            Sort.Direction.ASC,
-            "id"
-        ));
+    public Page<Template> getPublicTemplates(Pageable p, Long userId) throws AbstractException {
+        return templateRepo.getPublicTemplates(p, userId);
+    }
+
+    @Override
+    public Template getSingleTemplate(Long id, Long userId) throws AbstractException {
+        Template res = templateRepo.findById(id).orElseThrow(EntityNotFoundException::template);
+        if(res.getIsPrivate() && !res.getCreator().getId().equals(userId))
+            throw NotAllowedException.templateIsPrivate();
+        return res;
+    }
+
+    @Override
+    public void deleteTemplate(Long templateId, Long id) throws AbstractException {
+        Template t = templateRepo.findById(templateId).orElseThrow(EntityNotFoundException::template);
+
+        if(!Objects.equals(t.getCreator().getId(), id)) {
+            throw NotAllowedException.templateIsPrivate();
+        }
+
+        templateRepo.deleteById(templateId);
+        templateApprovalRepo.deleteById(templateId);
     }
 }

@@ -8,9 +8,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
+import ru.isu.auc.auction.model.dto.request.CreateRoomFromTemplateRequest;
 import ru.isu.auc.common.impl.SettingHandlerImpl;
 import ru.isu.auc.auction.model.dto.request.CreateDefaultRoomRequest;
+import ru.isu.auc.exception.model.AbstractException;
 import ru.isu.auc.security.model.User;
+import ru.isu.auc.templates.model.Template;
+import ru.isu.auc.templates.model.dto.mapper.TemplateMapper;
 
 public class RoomFactoryTest {
 
@@ -97,7 +101,7 @@ public class RoomFactoryTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws AbstractException {
         var res = roomFactory.createRoom(request, new User());
         var intervals = res.getValue0().getIntervals();
         Long id = 1L;
@@ -113,6 +117,6 @@ public class RoomFactoryTest {
         System.out.println(res2);
         Assert.isTrue(res2
             .toString().equals(
-                "[ +[2, 1]-[],  +[3]-[2],  +[4]-[3],  +[5]-[4, 1←|],  +[7, 6|→]-[5],  +[8]-[7],  +[9]-[8],  +[]-[9, 6]]"));
+                "[ +[2, 1]-[],  +[3]-[2],  +[4]-[3],  +[5]-[4, 1←|],  +[7|→, 6|→]-[5],  +[8]-[7],  +[9]-[8],  +[]-[9, 6]]"));
     }
 }

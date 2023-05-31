@@ -73,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public <R extends CreateRoomRequest> void  createRoom(R request, User user) {
+    public <R extends CreateRoomRequest> void  createRoom(R request, User user) throws AbstractException {
 
         //create room
         var r = roomFactoryProvider.getFactory(request)
@@ -225,8 +225,14 @@ public class RoomServiceImpl implements RoomService {
         if(round.getAscending() && sum-betParams.getStartSum()<0) {
             throw InvalidRequestException.betIsTooSmall();
         }
+        if(round.getAscending() && sum-betParams.getLimitSum()>0) {
+            throw InvalidRequestException.betIsTooBig();
+        }
         if(!round.getAscending() && sum-betParams.getStartSum()>0) {
             throw InvalidRequestException.betIsTooBig();
+        }
+        if(!round.getAscending() && sum-betParams.getLimitSum()<0) {
+            throw InvalidRequestException.betIsTooSmall();
         }
         if(Math.abs(sum-betParams.getStartSum())<betParams.getMinBetStep()) {
             throw InvalidRequestException.betHasBadStep();

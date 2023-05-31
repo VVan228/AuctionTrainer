@@ -18,8 +18,9 @@ public interface TemplateRepo extends JpaRepository<Template, Long> {
     @Query("update Template t set t.approvesAmount = t.approvesAmount-1 where t.id = :id")
     void decreaseApprovalCount(@Param("id") Long id);
 
-    @Query("select t from Template t where t.isPrivate=false and t.isDefault=false")
-    Page<Template> getPublicTemplates(Pageable pageable);
+    @Query("select t from Template t where t.isPrivate=false and t.isDefault=false and not t.creator.id=:userId" +
+        " and t.id not in (select ta.templateId from TemplateApproval ta join ta.approvals app where key(app)=:userId and value(app))")
+    Page<Template> getPublicTemplates(Pageable pageable, @Param("userId") Long userId);
 
     @Query("select t from Template t where " +
            "t.id in (select tt.id from Template tt where tt.creator.id=:userId) " +

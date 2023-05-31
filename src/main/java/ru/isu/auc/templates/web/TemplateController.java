@@ -2,6 +2,9 @@ package ru.isu.auc.templates.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.isu.auc.common.api.DTOMapper;
@@ -15,10 +18,13 @@ import ru.isu.auc.templates.model.dto.request.TemplateDataDTO;
 import ru.isu.auc.templates.model.dto.response.TemplateDTO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 public class TemplateController {
+
+    final Integer PAGE_SIZE = 20;
 
     @Autowired
     DTOMapper<TemplateDataDTO, TemplateData> templateDataMapper;
@@ -65,14 +71,37 @@ public class TemplateController {
 
     @ResponseBody
     @RequestMapping(
+        value="/template/delete",
+        method = RequestMethod.POST
+    )
+    public void delete(@RequestParam Long templateId) throws AbstractException {
+        User user = SecurityUser.getCurrent().getUser();
+
+        templateService.deleteTemplate(templateId, user.getId());
+    }
+
+    @ResponseBody
+    @RequestMapping(
         value="/template/get/my",
         method = RequestMethod.GET
     )
-    public List<TemplateDTO> getMyTemplates() throws AbstractException {
+    public Page<TemplateDTO> getMyTemplates(
+        @RequestParam Optional<String> sortBy,
+        @RequestParam Optional<Integer> page,
+        @RequestParam Optional<Boolean> isAsc
+    ) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
 
-        var res = templateService.getUserTemplates(user.getId()).getContent().stream().map(t->templateMapper.mapToDto(t)).collect(Collectors.toList());
-        return res;
+        String sort = sortBy.orElse("").equals("new")?"creationTime":"approvesAmount";
+        Pageable p = PageRequest.of(
+            page.orElse(0),
+            PAGE_SIZE,
+            Sort.Direction.DESC,
+            sort
+        );
+
+        //var res = templateService.getUserTemplates(user.getId()).getContent().stream().map(t->templateMapper.mapToDto(t)).collect(Collectors.toList());
+        return templateService.getUserTemplates(p, user.getId()).map(t->templateMapper.mapToDto(t));
     }
 
     @ResponseBody
@@ -80,10 +109,21 @@ public class TemplateController {
         value="/template/get/public",
         method = RequestMethod.GET
     )
-    public List<TemplateDTO> getPublicTemplates() throws AbstractException {
+    public Page<TemplateDTO> getPublicTemplates(
+        @RequestParam Optional<String> sortBy,
+        @RequestParam Optional<Integer> page,
+        @RequestParam Optional<Boolean> isAsc
+    ) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
 
-        var res = templateService.getPublicTemplates().getContent().stream().map(t->templateMapper.mapToDto(t)).collect(Collectors.toList());
-        return res;
+        String sort = sortBy.orElse("").equals("new")?"creationTime":"approvesAmount";
+        Pageable p = PageRequest.of(
+            page.orElse(0),
+            PAGE_SIZE,
+            Sort.Direction.DESC,
+            sort
+        );
+        //var res = templateService.getPublicTemplates().getContent().stream().map(t->templateMapper.mapToDto(t)).collect(Collectors.toList());
+        return templateService.getPublicTemplates(p, user.getId()).map(t->templateMapper.mapToDto(t));
     }
 }

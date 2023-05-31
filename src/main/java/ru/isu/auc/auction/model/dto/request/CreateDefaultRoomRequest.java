@@ -20,4 +20,39 @@ public class CreateDefaultRoomRequest implements CreateRoomRequest {
     Long defaultLotDuration;
 
     List<RoundRequestPart> rounds;
+
+    public CreateDefaultRoomRequest setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setDefaultBetParams(BetParams defaultBetParams) {
+        this.defaultBetParams = defaultBetParams;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setDefaultRoundPause(Long defaultRoundPause) {
+        this.defaultRoundPause = defaultRoundPause;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setDefaultLotPause(Long defaultLotPause) {
+        this.defaultLotPause = defaultLotPause;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setDefaultLotDuration(Long defaultLotDuration) {
+        this.defaultLotDuration = defaultLotDuration;
+        return this;
+    }
+
+    public CreateDefaultRoomRequest setRounds(List<RoundRequestPart> rounds) {
+        this.rounds = rounds;
+        return this;
+    }
 }

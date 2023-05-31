@@ -3,7 +3,6 @@ package ru.isu.auc.templates.model.dto.request;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.isu.auc.auction.model.dto.response.BetParamsDTO;
-import ru.isu.auc.templates.model.TemplateData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,22 +13,12 @@ public class TemplateDataDTO {
     String templateName;
     List<String> lotNames = new ArrayList<>();
     List<String> lotDescriptions = new ArrayList<>();
-    List<Boolean> roundTypes = new ArrayList<>();
+    List<RoundTemplateDTO> rounds = new ArrayList<>();
     BetParamsDTO betParams;
     Long lotDuration;
     Long lotPauseDuration;
     Long roundPauseDuration;
-
-    public TemplateDataDTO(TemplateData templateData) {
-        this.templateName = templateData.getTemplateName();
-        this.lotNames = templateData.getLotNames();
-        this.lotDescriptions = templateData.getLotDescriptions();
-        this.betParams = new BetParamsDTO(templateData.getBetParams());
-        this.lotDuration = templateData.getLotDuration();
-        this.lotPauseDuration = templateData.getLotPauseDuration();
-        this.roundPauseDuration = templateData.getRoundPauseDuration();
-        this.roundTypes = templateData.getRoundTypes();
-    }
+    Boolean manualMode;
 
 
     public TemplateDataDTO setTemplateName(String templateName) {
@@ -47,10 +36,6 @@ public class TemplateDataDTO {
         return this;
     }
 
-    public TemplateDataDTO setRoundTypes(List<Boolean> roundTypes) {
-        this.roundTypes = roundTypes;
-        return this;
-    }
 
     public TemplateDataDTO setBetParams(BetParamsDTO betParams) {
         this.betParams = betParams;
@@ -69,6 +54,16 @@ public class TemplateDataDTO {
 
     public TemplateDataDTO setRoundPauseDuration(Long roundPauseDuration) {
         this.roundPauseDuration = roundPauseDuration;
+        return this;
+    }
+
+    public TemplateDataDTO setManualMode(Boolean manualMode) {
+        this.manualMode = manualMode;
+        return this;
+    }
+
+    public TemplateDataDTO setRounds(List<RoundTemplateDTO> rounds) {
+        this.rounds = rounds;
         return this;
     }
 }

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.isu.auc.auction.api.entities.RoomService;
+import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.auction.model.InvalidRequestException;
 import ru.isu.auc.auction.model.dto.request.CreateDefaultRoomRequest;
+import ru.isu.auc.auction.model.dto.request.CreateRoomFromTemplateRequest;
 import ru.isu.auc.auction.model.dto.response.ParticipantBetDTO;
 import ru.isu.auc.auction.model.dto.response.RoomDTO;
 import ru.isu.auc.auction.model.room.ParticipantBet;
@@ -28,8 +30,18 @@ public class RoomController {
         method = RequestMethod.POST
     )
     public void createRoom(
-        @RequestBody CreateDefaultRoomRequest request)
-    {
+        @RequestBody CreateDefaultRoomRequest request) throws AbstractException {
+        User user = SecurityUser.getCurrent().getUser();
+        roomService.createRoom(request, user);
+    }
+
+    @ResponseBody
+    @RequestMapping(
+        value="/room/createFromTemplate",
+        method = RequestMethod.POST
+    )
+    public void createRoomFromTemplate(
+        @RequestBody CreateRoomFromTemplateRequest request) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
         roomService.createRoom(request, user);
     }

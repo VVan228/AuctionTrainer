@@ -2,18 +2,24 @@ package ru.isu.auc.templates.model.dto.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.isu.auc.auction.model.dto.mappers.BetParamsMapper;
 import ru.isu.auc.auction.model.dto.response.BetParamsDTO;
 import ru.isu.auc.auction.model.room.BetParams;
 import ru.isu.auc.common.api.DTOMapper;
+import ru.isu.auc.templates.model.RoundTemplate;
 import ru.isu.auc.templates.model.TemplateData;
+import ru.isu.auc.templates.model.dto.request.RoundTemplateDTO;
 import ru.isu.auc.templates.model.dto.request.TemplateDataDTO;
+
+import java.util.stream.Collectors;
 
 @Component
 public class TemplateDataMapper implements DTOMapper<TemplateDataDTO, TemplateData> {
 
     @Autowired
     DTOMapper<BetParamsDTO, BetParams> betParamsMapper;
+
+    @Autowired
+    DTOMapper<RoundTemplateDTO, RoundTemplate> roundTemplateMapper;
 
 
     @Override
@@ -22,11 +28,12 @@ public class TemplateDataMapper implements DTOMapper<TemplateDataDTO, TemplateDa
             .setTemplateName(templateDataDTO.getTemplateName())
             .setLotNames(templateDataDTO.getLotNames())
             .setLotDescriptions(templateDataDTO.getLotDescriptions())
-            .setRoundTypes(templateDataDTO.getRoundTypes())
+            .setRounds(templateDataDTO.getRounds().stream().map(r->roundTemplateMapper.mapFromDto(r)).collect(Collectors.toList()))
             .setBetParams(betParamsMapper.mapFromDto(templateDataDTO.getBetParams()))
             .setLotDuration(templateDataDTO.getLotDuration())
             .setLotPauseDuration(templateDataDTO.getLotPauseDuration())
-            .setRoundPauseDuration(templateDataDTO.getRoundPauseDuration());
+            .setRoundPauseDuration(templateDataDTO.getRoundPauseDuration())
+            .setManualMode(templateDataDTO.getManualMode());
     }
 
     @Override
@@ -35,10 +42,11 @@ public class TemplateDataMapper implements DTOMapper<TemplateDataDTO, TemplateDa
             .setTemplateName(templateData.getTemplateName())
             .setLotNames(templateData.getLotNames())
             .setLotDescriptions(templateData.getLotDescriptions())
-            .setRoundTypes(templateData.getRoundTypes())
+            .setRounds(templateData.getRounds().stream().map(r->roundTemplateMapper.mapToDto(r)).collect(Collectors.toList()))
             .setBetParams(betParamsMapper.mapToDto(templateData.getBetParams()))
             .setLotDuration(templateData.getLotDuration())
             .setLotPauseDuration(templateData.getLotPauseDuration())
-            .setRoundPauseDuration(templateData.getRoundPauseDuration());
+            .setRoundPauseDuration(templateData.getRoundPauseDuration())
+            .setManualMode(templateData.getManualMode());
     }
 }

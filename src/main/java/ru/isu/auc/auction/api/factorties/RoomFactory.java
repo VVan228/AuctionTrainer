@@ -5,11 +5,12 @@ import ru.isu.auc.auction.api.CreateRoomRequest;
 import ru.isu.auc.auction.model.room.Lot;
 import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.room.Round;
+import ru.isu.auc.exception.model.AbstractException;
 import ru.isu.auc.security.model.User;
 
 import java.util.List;
 
 public interface RoomFactory<R extends CreateRoomRequest> {
 
-    Triplet<Room, List<Lot>, List<Round>> createRoom(R request, User creator);
+    Triplet<Room, List<Lot>, List<Round>> createRoom(R request, User creator) throws AbstractException;
 }

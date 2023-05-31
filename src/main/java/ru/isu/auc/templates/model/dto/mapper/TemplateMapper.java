@@ -34,6 +34,8 @@ public class TemplateMapper implements DTOMapper<TemplateDTO, Template> {
             .setCreator(userMapper.mapToDto(template.getCreator()))
             .setApprovesAmount(template.getApprovesAmount())
             .setCreationTime(template.getCreationTime())
-            .setData(templateDataMapper.mapToDto(template.getData()));
+            .setData(templateDataMapper.mapToDto(template.getData()))
+            .setDefault(template.getIsDefault())
+            .setId(template.getId());
     }
 }

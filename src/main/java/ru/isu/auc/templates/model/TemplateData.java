@@ -21,11 +21,12 @@ public class TemplateData {
     @ElementCollection
     List<String> lotDescriptions = new ArrayList<>();
     @ElementCollection
-    List<Boolean> roundTypes = new ArrayList<>();
+    List<RoundTemplate> rounds = new ArrayList<>();
     BetParams betParams;
     Long lotDuration;
     Long lotPauseDuration;
     Long roundPauseDuration;
+    Boolean manualMode;
 
     public TemplateData setTemplateName(String templateName) {
         this.templateName = templateName;
@@ -42,10 +43,6 @@ public class TemplateData {
         return this;
     }
 
-    public TemplateData setRoundTypes(List<Boolean> roundTypes) {
-        this.roundTypes = roundTypes;
-        return this;
-    }
 
     public TemplateData setBetParams(BetParams betParams) {
         this.betParams = betParams;
@@ -64,6 +61,16 @@ public class TemplateData {
 
     public TemplateData setRoundPauseDuration(Long roundPauseDuration) {
         this.roundPauseDuration = roundPauseDuration;
+        return this;
+    }
+
+    public TemplateData setManualMode(Boolean manualMode) {
+        this.manualMode = manualMode;
+        return this;
+    }
+
+    public TemplateData setRounds(List<RoundTemplate> rounds) {
+        this.rounds = rounds;
         return this;
     }
 }

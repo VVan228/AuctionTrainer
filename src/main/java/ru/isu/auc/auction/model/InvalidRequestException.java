@@ -26,6 +26,13 @@ public class InvalidRequestException extends AbstractException {
                 .setMessage("No identification provided"));
     }
 
+    public static InvalidRequestException wrongNumberOfRounds(){
+        return new InvalidRequestException(
+            HttpStatus.BAD_REQUEST,
+            new SendableError()
+                .setMessage("Wrong number of rounds"));
+    }
+
     public static InvalidRequestException alreadyMadeBet(){
         return new InvalidRequestException(
             HttpStatus.FORBIDDEN,

@@ -15,7 +15,7 @@ public interface RoomService {
     Optional<Room> get(Long roomId);
     List<Room> saveAll(Iterable<Room> rooms);
 
-    <R extends CreateRoomRequest> void createRoom(R request, User user);
+    <R extends CreateRoomRequest> void createRoom(R request, User user) throws AbstractException;
     void joinRoom(User user, Long roomId) throws AbstractException;
     void leaveRoom(User user, Long roomId) throws AbstractException;
     <R extends RoomDTO> R getFullRoom(Long roomId) throws AbstractException;
