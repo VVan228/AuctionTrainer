@@ -5,6 +5,7 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.model.dto.response.UserDTO;
 import ru.isu.auc.common.api.DTOMapper;
 import ru.isu.auc.security.model.User;
@@ -15,7 +16,7 @@ import ru.isu.auc.templates.model.dto.response.TemplateDTO;
 
 import java.time.LocalDateTime;
 
-@Component
+@Service
 public class TemplateMapper implements DTOMapper<TemplateDTO, Template> {
 
     @Autowired

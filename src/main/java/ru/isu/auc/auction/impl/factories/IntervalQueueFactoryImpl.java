@@ -1,6 +1,7 @@
 package ru.isu.auc.auction.impl.factories;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.factorties.IntervalQueueFactory;
 import ru.isu.auc.auction.model.interval.*;
 import ru.isu.auc.auction.model.room.Room;
@@ -9,7 +10,7 @@ import ru.isu.auc.common.impl.DefaultHashMap;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 public class IntervalQueueFactoryImpl implements IntervalQueueFactory {
     @Override
     public IntervalQueue createFromIntervals(

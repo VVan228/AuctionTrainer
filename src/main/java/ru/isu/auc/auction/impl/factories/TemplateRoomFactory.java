@@ -3,6 +3,7 @@ package ru.isu.auc.auction.impl.factories;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.auction.model.InvalidRequestException;
 import ru.isu.auc.auction.model.dto.request.CreateDefaultRoomRequest;
@@ -19,7 +20,7 @@ import ru.isu.auc.templates.model.Template;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class TemplateRoomFactory implements RoomFactory<CreateRoomFromTemplateRequest> {
 
     @Autowired

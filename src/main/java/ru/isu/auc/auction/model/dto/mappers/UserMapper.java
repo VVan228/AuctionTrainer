@@ -1,11 +1,12 @@
 package ru.isu.auc.auction.model.dto.mappers;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.model.dto.response.UserDTO;
 import ru.isu.auc.common.api.DTOMapper;
 import ru.isu.auc.security.model.User;
 
-@Component
+@Service
 public class UserMapper implements DTOMapper<UserDTO, User> {
     @Override
     public User mapFromDto(UserDTO userDTO) {

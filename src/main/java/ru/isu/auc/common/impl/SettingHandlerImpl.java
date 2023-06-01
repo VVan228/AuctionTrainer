@@ -1,13 +1,14 @@
 package ru.isu.auc.common.impl;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.common.api.SettingHandler;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Service
 public class SettingHandlerImpl implements SettingHandler {
     @Override
     public <T> T resolveSetting(String fieldName, List<?> settingTree

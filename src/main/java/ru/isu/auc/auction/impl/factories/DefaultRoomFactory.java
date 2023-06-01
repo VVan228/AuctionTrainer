@@ -4,6 +4,7 @@ import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.factorties.IntervalFactory;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.auction.model.interval.Interval;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
+@Service
 public class DefaultRoomFactory implements RoomFactory<CreateDefaultRoomRequest> {
 
     @Value("${auction.defaults.end_on_all_answered}")

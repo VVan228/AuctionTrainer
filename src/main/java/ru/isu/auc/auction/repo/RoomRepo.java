@@ -4,9 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.types.Status;
 
+@Repository
 public interface RoomRepo extends JpaRepository<Room, Long> {
     @Query("select r.id from Room r " +
         "join IntervalQueue q on r.uid=q.roomUid " +

@@ -1,9 +1,10 @@
 package ru.isu.auc.auction.impl;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.ChannelProvider;
 
-@Component
+@Service
 public class ChannelProviderImpl implements ChannelProvider {
 
     //TODO: bring back

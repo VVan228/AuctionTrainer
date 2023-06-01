@@ -3,6 +3,7 @@ package ru.isu.auc.auction.impl.entities;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.entities.IntervalService;
 import ru.isu.auc.auction.api.entities.LotService;
 import ru.isu.auc.auction.model.EntityNotFoundException;
@@ -13,7 +14,7 @@ import ru.isu.auc.auction.repo.IntervalRepo;
 
 import java.util.List;
 
-@Component
+@Service
 public class IntervalServiceImpl implements IntervalService {
     @Autowired
     IntervalRepo intervalRepo;

@@ -4,6 +4,7 @@ import org.joda.time.DateTime;
 import org.quartz.*;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.model.interval.IntervalQueue;
 import ru.isu.auc.scheduling.api.SchedulerService;
 import ru.isu.auc.scheduling.api.SchedulerException;
@@ -11,7 +12,7 @@ import ru.isu.auc.scheduling.api.SchedulerException;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
-@Component
+@Service
 public class JobHelper implements SchedulerService {
 
     final

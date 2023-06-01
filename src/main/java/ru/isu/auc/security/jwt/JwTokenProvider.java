@@ -14,10 +14,12 @@ import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
+
 import java.util.Base64;
 import java.util.Date;
 
-@Component
+@Service
 public class JwTokenProvider {
     @Value("${jwt.access_expiration}")
     private long accessValidity;

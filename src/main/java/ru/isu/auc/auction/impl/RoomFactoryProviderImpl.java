@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.CreateRoomRequest;
 import ru.isu.auc.auction.api.factorties.RoomFactory;
 import ru.isu.auc.auction.api.RoomFactoryProvider;
 
-@Component
+@Service
 public class RoomFactoryProviderImpl implements RoomFactoryProvider {
 
     @Autowired

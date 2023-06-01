@@ -2,6 +2,7 @@ package ru.isu.auc.auction.impl.factories;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.factorties.IntervalFactory;
 import ru.isu.auc.auction.model.interval.Interval;
 import ru.isu.auc.auction.model.types.IntervalType;
@@ -10,7 +11,7 @@ import ru.isu.auc.auction.model.types.Status;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@Service
 public class IntervalFactoryImpl implements IntervalFactory {
 
     @Value("${auction.defaults.autostart}")

@@ -1,11 +1,12 @@
 package ru.isu.auc.auction.model.dto.mappers;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.model.dto.response.BetParamsDTO;
 import ru.isu.auc.auction.model.room.BetParams;
 import ru.isu.auc.common.api.DTOMapper;
 
-@Component
+@Service
 public class BetParamsMapper implements DTOMapper<BetParamsDTO, BetParams> {
     @Override
     public BetParams mapFromDto(BetParamsDTO betParamsDTO) {
