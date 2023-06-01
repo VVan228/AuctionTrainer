@@ -29,10 +29,10 @@ public class RoomController {
         value="/room/createDefault",
         method = RequestMethod.POST
     )
-    public void createRoom(
+    public Long createRoom(
         @RequestBody CreateDefaultRoomRequest request) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
-        roomService.createRoom(request, user);
+        return roomService.createRoom(request, user);
     }
 
     @ResponseBody
@@ -40,10 +40,10 @@ public class RoomController {
         value="/room/createFromTemplate",
         method = RequestMethod.POST
     )
-    public void createRoomFromTemplate(
+    public Long createRoomFromTemplate(
         @RequestBody CreateRoomFromTemplateRequest request) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
-        roomService.createRoom(request, user);
+        return roomService.createRoom(request, user);
     }
 
     @ResponseBody

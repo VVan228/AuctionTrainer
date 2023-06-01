@@ -73,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public <R extends CreateRoomRequest> void  createRoom(R request, User user) throws AbstractException {
+    public <R extends CreateRoomRequest> Long  createRoom(R request, User user) throws AbstractException {
 
         //create room
         var r = roomFactoryProvider.getFactory(request)
@@ -98,6 +98,8 @@ public class RoomServiceImpl implements RoomService {
         connectedUsersRepo.save(new ConnectedUsers().setRoomId(room.getId()));
         //add room to schedule
         auctionService.scheduleRoom(room);
+
+        return room.getId();
 
     }
 
