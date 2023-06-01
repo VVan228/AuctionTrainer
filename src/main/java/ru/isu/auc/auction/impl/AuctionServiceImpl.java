@@ -167,7 +167,7 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
                 .getIntervalId());
 
         if(room.getStatus().equals(Status.SAVED)){
-            handleIntervalPoint(q, i);
+            handleUserStartRoom(q, i);
             return;
         }
 
@@ -185,6 +185,42 @@ public class AuctionServiceImpl implements TriggerCallback, AuctionService {
                 firstStartInterval.getStatus().equals(Status.ENDED))) {
 
             handleUserEndPoint(q, i);
+        }
+    }
+
+    void handleUserStartRoom(IntervalQueue q, int index) throws SchedulerException{
+        var curPi = q.getIntervalPoints().get(index);
+        var nextPi = q.getIntervalPoints().get(index+1);
+
+        //if all are autostarts, we need to start room,
+        //therefore no need to send empty notification
+        //if(curPi.getAtLeastOneManualStart())
+        notificationService.sendManualStartRoomNotifications(curPi);
+        //manualStartNotification(curPi); (old)
+
+        if(curPi.getAtLeastOneManualStart() && curPi.getAtLeastOneAutoStart()) return;
+
+        //if there are autoends, but alse manuals, we schedule same point
+        if(nextPi.getAtLeastOneManualEnd() && nextPi.getAtLeastOneAutoEnd()) {
+            schedulerService.startJob(
+                1,
+                q.getId(),
+                (long) index,
+                (int) (nextPi.getTimestamp() - curPi.getTimestamp())
+            );
+        }
+        //all are autoends, we can schedule next point
+        if(nextPi.getAtLeastOneAutoEnd() && !nextPi.getAtLeastOneManualEnd()) {
+            q.setCurrentIndex((long) index+1);
+            intervalQueueService.setCurrentIndex(
+                q.getId(), (long) index+1);
+
+            schedulerService.startJob(
+                1,
+                q.getId(),
+                (long) index+1,
+                (int) (nextPi.getTimestamp() - curPi.getTimestamp())
+            );
         }
     }
 

@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/register/**").permitAll()
                         .requestMatchers("/auth/updateToken").permitAll()
+                        .requestMatchers("/test").permitAll()
                         .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                         .and()

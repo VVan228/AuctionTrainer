@@ -34,4 +34,6 @@ public interface NotificationService {
 
     void sendConnectionNotification(User user, Room room, int participants);
     void sendDisconnectionNotification(User user, Room room, int participants);
+
+    void sendManualStartRoomNotifications(IntervalPoint intervalPoint);
 }

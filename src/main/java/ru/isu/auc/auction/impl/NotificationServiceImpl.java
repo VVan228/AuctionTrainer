@@ -137,6 +137,45 @@ public class NotificationServiceImpl implements NotificationService {
         );
     }
 
+    @Override
+    public void sendManualStartRoomNotifications(IntervalPoint intervalPoint) {
+        RoomEventPayload payload = new RoomEventPayload();
+
+        //we add all manualstarts
+        for (var intervalStart: intervalPoint.getIntervalStartIds()) {
+            if(intervalStart.getAutostart()) {
+                payload.addIntervalStart(
+                    intervalService.setStatus(
+                        intervalStart.getIntervalId(),
+                        Status.ONGOING));
+            }
+        }
+        if(payload.getIntervalsStarted().isEmpty()){
+            for (var intervalStart: intervalPoint.getIntervalStartIds()) {
+                if(!intervalStart.getAutostart()) {
+                    payload.addIntervalStart(
+                        intervalService.setStatus(
+                            intervalStart.getIntervalId(),
+                            Status.ONGOING));
+                }
+            }
+        }
+
+        //we check room state
+        if(intervalPoint.getIntervalStartIds().isEmpty()) {
+            payload.setRoomStatus(Status.ENDED);
+        }else {
+            payload.setRoomStatus(Status.ONGOING);
+        }
+        messagingService.sendNotification(
+            Notification.createFromPayload(payload),
+            channelProvider.getChannel(
+                intervalService.getRoomIdByQueueId(
+                    intervalPoint.getQueueId()),
+                false)
+        );
+    }
+
     private void checkPrevEndNotification(
         IntervalPoint intervalPoint,
         RoomEventPayload payload,

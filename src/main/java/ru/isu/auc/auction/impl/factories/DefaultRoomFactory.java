@@ -15,6 +15,7 @@ import ru.isu.auc.auction.model.room.Lot;
 import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.auction.model.room.Round;
 import ru.isu.auc.auction.model.types.RoomType;
+import ru.isu.auc.auction.model.types.Status;
 import ru.isu.auc.common.api.SettingHandler;
 import ru.isu.auc.security.model.User;
 
@@ -60,6 +61,7 @@ public class DefaultRoomFactory implements RoomFactory<CreateDefaultRoomRequest>
             .setName(request.getName())
             .setStartTime(request.getStartTime())
             .setRoomType(RoomType.SINGLE_LAYER);
+            //.setStatus(Status.SAVED);
         List<Lot> resLots = new ArrayList<>();
         List<Round> resRounds = new ArrayList<>();
 
