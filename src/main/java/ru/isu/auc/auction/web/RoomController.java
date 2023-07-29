@@ -3,15 +3,12 @@ package ru.isu.auc.auction.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.isu.auc.auction.api.entities.RoomService;
-import ru.isu.auc.auction.api.factorties.RoomFactory;
+import ru.isu.auc.auction.api.RoomOperationService;
 import ru.isu.auc.auction.model.InvalidRequestException;
 import ru.isu.auc.auction.model.dto.request.CreateDefaultRoomRequest;
 import ru.isu.auc.auction.model.dto.request.CreateRoomFromTemplateRequest;
 import ru.isu.auc.auction.model.dto.response.ParticipantBetDTO;
 import ru.isu.auc.auction.model.dto.response.RoomDTO;
-import ru.isu.auc.auction.model.room.ParticipantBet;
-import ru.isu.auc.auction.model.room.Room;
 import ru.isu.auc.exception.model.AbstractException;
 import ru.isu.auc.security.model.SecurityUser;
 import ru.isu.auc.security.model.User;
@@ -22,7 +19,7 @@ import java.util.Optional;
 public class RoomController {
 
     @Autowired
-    RoomService roomService;
+    RoomOperationService roomOperationService;
 
     @ResponseBody
     @RequestMapping(
@@ -32,7 +29,7 @@ public class RoomController {
     public Long createRoom(
         @RequestBody CreateDefaultRoomRequest request) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
-        return roomService.createRoom(request, user);
+        return roomOperationService.createRoom(request, user);
     }
 
     @ResponseBody
@@ -43,7 +40,7 @@ public class RoomController {
     public Long createRoomFromTemplate(
         @RequestBody CreateRoomFromTemplateRequest request) throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
-        return roomService.createRoom(request, user);
+        return roomOperationService.createRoom(request, user);
     }
 
     @ResponseBody
@@ -55,7 +52,7 @@ public class RoomController {
         @RequestParam Long roomId)
     throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
-        return roomService.getFullRoom(roomId);
+        return roomOperationService.getFullRoom(roomId);
     }
 
     @ResponseBody
@@ -68,7 +65,7 @@ public class RoomController {
         throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
 
-        roomService.joinRoom(user, roomId);
+        roomOperationService.joinRoom(user, roomId);
     }
 
     @ResponseBody
@@ -81,7 +78,7 @@ public class RoomController {
         throws AbstractException {
         User user = SecurityUser.getCurrent().getUser();
 
-        roomService.leaveRoom(user, roomId);
+        roomOperationService.leaveRoom(user, roomId);
     }
 
     @ResponseBody
@@ -96,7 +93,7 @@ public class RoomController {
 
         User user = SecurityUser.getCurrent().getUser();
 
-        roomService.handleBet(intervalId, user, sum);
+        roomOperationService.handleBet(intervalId, user, sum);
     }
 
     @ResponseBody
@@ -113,13 +110,13 @@ public class RoomController {
             throw InvalidRequestException.noId();
 
         if(lotId.isPresent()){
-            var res = roomService.getLotResultByLotId(lotId.get());
+            var res = roomOperationService.getLotResultByLotId(lotId.get());
             if(res!=null) {
                 return new ParticipantBetDTO(res);
             }
             return null;
         }
-        var res = roomService.getLotResultByIntervalId(intervalId.get());
+        var res = roomOperationService.getLotResultByIntervalId(intervalId.get());
         if(res!=null) {
             return new ParticipantBetDTO(res);
         }

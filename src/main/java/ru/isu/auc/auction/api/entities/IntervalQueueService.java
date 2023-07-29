@@ -7,11 +7,10 @@ import java.util.UUID;
 
 public interface IntervalQueueService {
     IntervalQueue get(Long queueId);
-    void setCurrentIndex(Long queueId, Long index);
-
     IntervalQueue save(IntervalQueue intervalQueue);
     List<IntervalQueue> saveAll(Iterable<IntervalQueue> intervalQueue);
 
     IntervalQueue getByRoomUid(UUID roomUid);
+    void setCurrentIndex(Long queueId, Long index);
     Long getIntervalQIdByRoomUid(UUID roomUid);
 }

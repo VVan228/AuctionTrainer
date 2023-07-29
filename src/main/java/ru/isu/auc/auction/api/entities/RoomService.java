@@ -14,13 +14,4 @@ public interface RoomService {
     Room save(Room room);
     Optional<Room> get(Long roomId);
     List<Room> saveAll(Iterable<Room> rooms);
-
-    <R extends CreateRoomRequest> Long createRoom(R request, User user) throws AbstractException;
-    void joinRoom(User user, Long roomId) throws AbstractException;
-    void leaveRoom(User user, Long roomId) throws AbstractException;
-    <R extends RoomDTO> R getFullRoom(Long roomId) throws AbstractException;
-    void handleBet(Long intervalId, User user, Long sum) throws AbstractException;
-    ParticipantBet getLotResultByIntervalId(Long intervalId) throws AbstractException;
-    ParticipantBet getLotResultByLotId(Long lotId) throws AbstractException;
-
 }

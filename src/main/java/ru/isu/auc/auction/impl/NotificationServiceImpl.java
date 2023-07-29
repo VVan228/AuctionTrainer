@@ -3,6 +3,7 @@ package ru.isu.auc.auction.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.isu.auc.auction.api.ChannelProvider;
+import ru.isu.auc.auction.api.IntervalEventHandler;
 import ru.isu.auc.auction.api.NotificationService;
 import ru.isu.auc.auction.api.entities.IntervalService;
 import ru.isu.auc.auction.model.interval.IntervalPoint;
@@ -25,6 +26,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     ChannelProvider channelProvider;
+
+    @Autowired
+    IntervalEventHandler intervalEventHandler;
 
     @Override
     public void sendIntervalPointNotifications(IntervalPoint intervalPoint) {
@@ -49,14 +53,7 @@ public class NotificationServiceImpl implements NotificationService {
         }else {
             payload.setRoomStatus(Status.ONGOING);
         }
-        messagingService.sendNotification(
-            Notification.createFromPayload(payload),
-            channelProvider.getChannel(
-                intervalService.getRoomIdByQueueId(
-                    intervalPoint.getQueueId()),
-                false)
-        );
-
+        sendIntervalNotification(intervalPoint, payload);
     }
 
     @Override
@@ -84,14 +81,7 @@ public class NotificationServiceImpl implements NotificationService {
         }else {
             payload.setRoomStatus(Status.ONGOING);
         }
-        messagingService.sendNotification(
-            Notification.createFromPayload(payload),
-            channelProvider.getChannel(
-                intervalService.getRoomIdByQueueId(
-                    intervalPoint.getQueueId()),
-                false)
-        );
-
+        sendIntervalNotification(intervalPoint, payload);
     }
 
     @Override
@@ -128,13 +118,7 @@ public class NotificationServiceImpl implements NotificationService {
         }else {
             payload.setRoomStatus(Status.ONGOING);
         }
-        messagingService.sendNotification(
-            Notification.createFromPayload(payload),
-            channelProvider.getChannel(
-                intervalService.getRoomIdByQueueId(
-                    intervalPoint.getQueueId()),
-                false)
-        );
+        sendIntervalNotification(intervalPoint, payload);
     }
 
     @Override
@@ -167,13 +151,7 @@ public class NotificationServiceImpl implements NotificationService {
         }else {
             payload.setRoomStatus(Status.ONGOING);
         }
-        messagingService.sendNotification(
-            Notification.createFromPayload(payload),
-            channelProvider.getChannel(
-                intervalService.getRoomIdByQueueId(
-                    intervalPoint.getQueueId()),
-                false)
-        );
+        sendIntervalNotification(intervalPoint, payload);
     }
 
     private void checkPrevEndNotification(
@@ -208,6 +186,20 @@ public class NotificationServiceImpl implements NotificationService {
                     }
                 });
         }
+    }
+
+    private void sendIntervalNotification(
+        IntervalPoint intervalPoint,
+        RoomEventPayload payload) {
+
+        intervalEventHandler.intervalEvent(intervalPoint);
+
+        messagingService.sendNotification(
+            Notification.createFromPayload(payload),
+            channelProvider.getChannel(
+                intervalService.getRoomIdByQueueId(intervalPoint.getQueueId()),
+                false)
+        );
     }
 
     @Override

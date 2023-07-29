@@ -45,21 +45,4 @@ public class LotServiceImpl implements LotService {
     public Lot findByIntervalId(Long intervalId) {
         return lotRepo.findByIntervalId(intervalId);
     }
-
-    @Override
-    @Transactional
-    public void setWinner(UUID lotUid) {
-        Lot lot = findByUid(lotUid);
-        Round r = roundService.findByLotId(lot.getId());
-        ParticipantBet winner = null;
-        if(r.getAscending()) {
-            winner = lot.getBets().stream()
-                .max(Comparator.comparing(ParticipantBet::getSum)).orElseGet(()->null);
-        } else{
-            winner = lot.getBets().stream()
-                .min(Comparator.comparing(ParticipantBet::getSum)).orElseGet(()->null);
-        }
-        lot.setWinner(winner);
-        lotRepo.save(lot);
-    }
 }

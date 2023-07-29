@@ -1,7 +1,6 @@
 package ru.isu.auc.auction.model;
 
 import org.springframework.http.HttpStatus;
-import ru.isu.auc.common.impl.MapBuilder;
 import ru.isu.auc.exception.model.AbstractException;
 import ru.isu.auc.exception.model.SendableError;
 

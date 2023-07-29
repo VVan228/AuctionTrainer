@@ -47,9 +47,6 @@ public class IntervalServiceImpl implements IntervalService {
 
         i.setStatus(status);
 
-        if(status.equals(Status.ENDED) && i.getType().equals(IntervalType.LOT)) {
-            lotService.setWinner(i.getEntityUid());
-        }
         i = intervalRepo.save(i);
         return i;
     }

@@ -11,5 +11,4 @@ public interface LotService {
     Lot findByUid(UUID uid);
     Lot findById(Long id);
     Lot findByIntervalId(Long intervalId);
-    void setWinner(UUID lotUid);
 }

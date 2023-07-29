@@ -151,7 +151,7 @@ public class DefaultRoomFactory implements RoomFactory<CreateDefaultRoomRequest>
 
             Round roundEntity = new Round()
                 .setRoomUid(room.getUid())
-                .setAscending(isRoundAsc(i));
+                .setAscending(round.getAscending()==null?isRoundAsc(i):round.getAscending());
             resRounds.add(roundEntity);
 
             Interval roundInterval = intervalFactory.createRound(

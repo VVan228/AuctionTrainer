@@ -27,22 +27,28 @@ public class IntervalFactoryImpl implements IntervalFactory {
 
 
     @Override
-    public Interval createLot(Long duration, UUID entityUid) {
+    public Interval createLot(
+        Long duration,
+        UUID entityUid) {
         return createLot(duration, entityUid, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
-    public Interval createLotPause(Long duration) {
+    public Interval createLotPause(
+        Long duration) {
         return createLotPause(duration, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
-    public Interval createRound(List<Interval> lots, UUID entityUid) {
+    public Interval createRound(
+        List<Interval> lots,
+        UUID entityUid) {
         return createRound(lots, entityUid, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
     @Override
-    public Interval createRoundPause(Long duration) {
+    public Interval createRoundPause(
+        Long duration) {
         return createRoundPause(duration, DEFAULT_AUTOSTART, DEFAULT_AUTOEND);
     }
 
