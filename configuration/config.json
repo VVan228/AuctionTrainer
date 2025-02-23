@@ -1,0 +1,16 @@
+{
+  "token_hmac_secret_key": "VEdpYWizDRFh9Er9knvo",
+  "admin_password": "e4577f4f-af07-410e-bb69-480f9cea4cc1",
+  "admin_secret": "VEdpYWizDRFh9Er9knvo",
+  "api_key": "ad1bcd4b-8b68-4749-ac37-21dc64102c59",
+  "allowed_origins": ["http://localhost:8080", "http://localhost:*"],
+  "debug": true,
+  "allow_subscribe_for_client": true,
+  "admin": true,
+  "force_push_join_leave":true,
+  "join_leave":true,
+  "presence": true,
+  "allow_presence_for_subscriber": true,
+  "allow_presence_for_anonymous": true,
+  "allow_presence_for_client": true
+}
