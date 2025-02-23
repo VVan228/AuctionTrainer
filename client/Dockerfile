@@ -7,7 +7,8 @@ RUN apt-get install -y curl git unzip
 
 # define variables
 ARG FLUTTER_SDK=/usr/local/flutter
-ARG FLUTTER_VERSION=3.10.5
+ARG FLUTTER_VERSION=3.29.0
+ARG SERVER_URL=http://localhost:8481/
 ARG APP=/app/
 
 #clone flutter
@@ -32,7 +33,7 @@ WORKDIR $APP
 # Run build: 1 - clean, 2 - pub get, 3 - build web
 RUN flutter clean
 RUN flutter pub get
-RUN flutter build web
+RUN flutter build web --dart-define=SERVER_URL=$SERVER_URL
 
 # once heare the app will be compiled and ready to deploy
 
