@@ -7,13 +7,9 @@ import '../api/TokenService.dart';
 
 @LazySingleton(as: ServerDataProvider)
 class RetrofitDataProvider implements ServerDataProvider {
-  //String baseUrl = "http://192.168.0.102:8080/";
-  //String messagingUrl = "ws://192.168.0.102:8000/";
-  // String baseUrl = "http://localhost:8481/";
-  // String messagingUrl = "ws://localhost:8000/";
   String baseUrl = const String.fromEnvironment('SERVER_URL', defaultValue: '');
-  String messagingUrl = const String.fromEnvironment('MESSAGING_URL',
-      defaultValue: 'http://localhost:8000/');
+  String msgUrl =
+      const String.fromEnvironment('MESSAGING_URL', defaultValue: '');
 
   @override
   String getBaseUrl() {
@@ -33,7 +29,7 @@ class RetrofitDataProvider implements ServerDataProvider {
 
   @override
   String getMessagingUrl() {
-    return messagingUrl;
+    return msgUrl;
   }
 
   @override
