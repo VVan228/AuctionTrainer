@@ -15,6 +15,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 2
       MYSQL_DATABASE: auction_demo_scheduler
+    healthcheck:
+      test: ["CMD", "mysql"]
+      start_period: 20s
+      retries: 5
+      interval: 20s
   server:
     container_name: auc-server
     build:
@@ -25,5 +30,5 @@ services:
         - QRTZ_DATASOURCE_URL=jdbc:mysql://localhost:3306/auction_demo_scheduler
     depends_on:
       db:
-        condition: service_started
+        condition: service_healthy
     
