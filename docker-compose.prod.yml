@@ -40,7 +40,7 @@ services:
     ports:
       - "80:80"
     networks:
-        - local
+      - local
 
 
 networks:
