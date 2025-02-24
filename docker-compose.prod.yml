@@ -11,8 +11,6 @@ services:
   db:
     build:
       context: ./db
-      args:
-        MYSQL_ROOT_PASSWORD: root
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: 1
