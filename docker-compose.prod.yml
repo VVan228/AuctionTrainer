@@ -13,5 +13,5 @@ services:
       context: ./db
     environment:
       MYSQL_ROOT_PASSWORD: 2
-    # command: ["bash", "-c", "/setupdb.sh"]
+    command: ["bash", "-c", "/setupdb.sh && tail -f anything"]
     # entrypoint: ["mysqld --initialize", "mysqld"]
