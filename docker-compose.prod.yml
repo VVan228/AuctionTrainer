@@ -15,8 +15,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 2
       MYSQL_DATABASE: auction_demo_scheduler
-    healthcheck:
-      test: ["CMD", "ping", "mysql"]
   server:
     container_name: auc-server
     build:
