@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-# service mysql start
+mysql.server start
 mysql < ./auction_demo_scheduler.sql
-# service mysql stop
+mysql.server stop
