@@ -14,3 +14,4 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 2
     command: ["bash", "-c", "/setupdb.sh"]
+    entrypoint: ["mysqld"]
