@@ -1,4 +1,2 @@
 FROM mysql:8.0
-COPY /setupdb.sh /setupdb.sh
-COPY /auction_demo_scheduler.sql /auction_demo_scheduler.sql
-RUN /setupdb.sh
+COPY /auction_demo_scheduler.sql /docker-entrypoint-initdb.d/auction_demo_scheduler.sql
