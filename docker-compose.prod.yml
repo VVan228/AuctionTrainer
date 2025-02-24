@@ -1,10 +1,16 @@
 version: '2' 
 services: 
-  client:
-    container_name: auc-client
+  # client:
+  #   container_name: auc-client
+  #   build:
+  #     context: ./client
+  #     args:
+  #       - SERVER_URL=http://localhost:8481/
+  #   ports:
+  #     - "80:80"
+  db:
     build:
-      context: ./client
-      args:
-        - SERVER_URL=http://localhost:8481/
-    ports:
-      - "80:80"
+      context: ./db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
