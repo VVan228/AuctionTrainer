@@ -8,7 +8,7 @@ RUN apt-get install -y curl git unzip
 # define variables
 ARG FLUTTER_SDK=/usr/local/flutter
 ARG FLUTTER_VERSION=3.29.0
-ARG SERVER_URL=http://localhost:8481/
+ARG SERVER_URL=/
 ARG APP=/app/
 
 #clone flutter
