@@ -1,4 +1,4 @@
 FROM mysql:8.0
-COPY /setupdb.sh /mysql/setup.sh
-COPY /setupdb.sql /mysql/setup.sql
+COPY /setupdb.sh /setupdb.sh
+COPY /auction_demo_scheduler.sql /auction_demo_scheduler.sql
 RUN /setupdb.sh
