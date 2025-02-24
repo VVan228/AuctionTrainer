@@ -14,4 +14,4 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 2
-    entrypoint: ["bash", "-c", "/startupdb.sh"]
+    entrypoint: ["bash", "-c", "/setupdb.sh"]
