@@ -4,4 +4,9 @@ COPY . /
 
 RUN mvn clean install
 
-RUN java -jar ./target/auc-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:mysql://localhost:3306/auction_demo
+ARG DATASOURCE_URL=/
+ARG DATASOURCE_PASSWORD=
+ARG QRTZ_DATASOURCE_URL=$DATASOURCE_URL
+ARG QRTZ_DATASOURCE_PASSWORD=$DATASOURCE_PASSWORD
+
+RUN java -jar ./target/auc-0.0.1-SNAPSHOT.jar --spring.datasource.url=$DATASOURCE_URL --org.quartz.dataSource.quartzDataSource.URL=$QRTZ_DATASOURCE_URL --spring.datasource.password=$DATASOURCE_PASSWORD --org.quartz.dataSource.quartzDataSource.password=$QRTZ_DATASOURCE_PASSWORD
