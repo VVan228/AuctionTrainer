@@ -25,5 +25,5 @@ services:
         - QRTZ_DATASOURCE_URL=jdbc:mysql://localhost:3306/auction_demo_scheduler
     depends_on:
       db:
-        condition: servicE_started
+        condition: service_started
     
