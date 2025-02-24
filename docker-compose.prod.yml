@@ -1,13 +1,5 @@
 version: '2' 
 services: 
-  client:
-    container_name: auc-client
-    build:
-      context: ./client
-      args:
-        - SERVER_URL=http://auc-server:8481/
-    ports:
-      - "80:80"
   db:
     container_name: auc-db
     build:
@@ -39,6 +31,16 @@ services:
       - "8481"
     networks:
       - local
+  client:
+    container_name: auc-client
+    build:
+      context: ./client
+      args:
+        - SERVER_URL=http://auc-server:8481/
+    ports:
+      - "80:80"
+    networks:
+        - local
 
 
 networks:
