@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e
-mysql.server start
+mysqld start
 mysql < ./auction_demo_scheduler.sql
-mysql.server stop
+mysqladmin -u root shutdown
