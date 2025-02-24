@@ -12,14 +12,15 @@ services:
     container_name: auc-db
     build:
       context: ./db
+    ports:
+      - "3306"
     environment:
       MYSQL_ROOT_PASSWORD: 2
       MYSQL_DATABASE: auction_demo_scheduler
     healthcheck:
-      test: ["CMD", "mysql"]
-      start_period: 60s
-      retries: 5
-      interval: 30s
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
   server:
     container_name: auc-server
     build:
