@@ -18,25 +18,24 @@ class AuthServiceImpl implements AuthService {
         baseUrl: getIt<ServerDataProvider>().getBaseUrl());
 
     String? error;
-    throw Exception(getIt<ServerDataProvider>().getBaseUrl());
 
-    // await client.login(request).then((value) {
-    //   getIt<TokenService>().setTokens(value.refreshToken, value.accessToken);
-    // }).catchError((Object obj) {
-    //   switch (obj.runtimeType) {
-    //     case DioError:
-    //       final res = (obj as DioError);
-    //       error = res.response?.data['message'];
-    //       throw Exception(error);
-    //     default:
-    //       error = "wtf";
-    //       break;
-    //   }
-    // });
+    await client.login(request).then((value) {
+      getIt<TokenService>().setTokens(value.refreshToken, value.accessToken);
+    }).catchError((Object obj) {
+      switch (obj.runtimeType) {
+        case DioError:
+          final res = (obj as DioError);
+          error = res.response?.data['message'];
+          throw Exception(error);
+        default:
+          error = "wtf";
+          break;
+      }
+    });
 
-    // if (error != null) {
-    //   throw Exception(error);
-    // }
+    if (error != null) {
+      throw Exception(error);
+    }
   }
 
   @override

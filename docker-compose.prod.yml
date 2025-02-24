@@ -36,7 +36,7 @@ services:
     build:
       context: ./client
       args:
-        - SERVER_URL=http://auc-server:8481/
+        - SERVER_URL=http://158.160.73.90:8481/
     ports:
       - "80:80"
     networks:
