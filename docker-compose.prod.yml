@@ -13,4 +13,4 @@ services:
       context: ./db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: 2
