@@ -13,4 +13,4 @@ RUN echo java -jar ./target/auc-0.0.1-SNAPSHOT.jar --spring.datasource.url=$DATA
 
 RUN chmod +x /startup.sh
 
-ENTRYPOINT ["/startup.sh"]
+ENTRYPOINT ["startup.sh"]
