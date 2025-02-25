@@ -28,7 +28,9 @@ public class JwTokenFilter extends GenericFilter {
             ServletResponse servletResponse,
             FilterChain filterChain)
     throws IOException, ServletException {
+        System.out.println("start token get");
         String token = jwTokenProvider.resolveToken((HttpServletRequest) servletRequest);
+        System.out.println("token: " + token);
         try {
             if (token != null && jwTokenProvider.validateToken(token)) {
                 Authentication authentication = jwTokenProvider.getAuthentication(token);
