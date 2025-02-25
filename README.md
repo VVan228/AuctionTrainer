@@ -1,5 +1,6 @@
 # AuctionTrainer
 Online auction app.
+[paper (in russian)](https://drive.google.com/file/d/1_HWdJkheXCVE26IoxWI0Z-SBvj7eHbfh/view?usp=drive_link).
 
 #### Run prod container
 ```
