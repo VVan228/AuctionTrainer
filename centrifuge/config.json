@@ -3,7 +3,7 @@
   "admin_password": "e4577f4f-af07-410e-bb69-480f9cea4cc1",
   "admin_secret": "VEdpYWizDRFh9Er9knvo",
   "api_key": "ad1bcd4b-8b68-4749-ac37-21dc64102c59",
-  "allowed_origins": ["http://158.160.73.90", "http://158.160.73.90:*"],
+  "allowed_origins": ["http://*"],
   "debug": true,
   "allow_subscribe_for_client": true,
   "admin": true,
