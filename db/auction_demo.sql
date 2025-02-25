@@ -1,3 +1,4 @@
+CREATE DATABASE auction_demo;
 USE auction_demo;
 
 DROP TABLE IF EXISTS `connected_users`;

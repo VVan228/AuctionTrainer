@@ -1,3 +1,4 @@
+CREATE DATABASE auction_demo_scheduler;
 USE auction_demo_scheduler;
 
 DROP TABLE IF EXISTS QRTZ_FIRED_TRIGGERS;
