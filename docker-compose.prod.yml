@@ -24,6 +24,7 @@ services:
         - DATASOURCE_PASSWORD=2
         - QRTZ_DATASOURCE_URL=jdbc:mysql://auc-db:3306/auction_demo_scheduler
         - QRTZ_DATASOURCE_PASSWORD=2
+        - MESSAGING_URL=http://auc-centrifugo:8000/api
     depends_on:
       db:
         condition: service_healthy
@@ -37,8 +38,23 @@ services:
       context: ./client
       args:
         - SERVER_URL=http://158.160.73.90:8481/
+        - MESSAGING_URL=http://158.160.73.90:8000/
     ports:
       - "80:80"
+    networks:
+      - local
+  centrifugo:
+    container_name: auc-centrifugo
+    image: centrifugo/centrifugo:v4
+    volumes:
+      - ./centrifuge/config.json:/centrifugo/config.json
+    command: centrifugo -c config.json
+    ports:
+      - "8000:8000"
+    ulimits:
+      nofile:
+        soft: 65535
+        hard: 65535
     networks:
       - local
 
