@@ -74,6 +74,7 @@ class _MainPageState extends State<MainPage> implements MainView {
                                   label: Text("roomId"),
                                 ),
                                 controller: _roomController,
+                                autofocus: true,
                               ),
                             ),
                             Row(
