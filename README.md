@@ -21,3 +21,4 @@ docker compose -f ./docker-compose.prod.yml up
 - [ ] images in lots?
 - [ ] list of running rooms?
 - [ ] development container
+- [ ] budget for game
